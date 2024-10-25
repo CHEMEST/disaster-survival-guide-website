@@ -1,11 +1,12 @@
 import React from 'react';
+import GeocodingForm from './GeocodingForm';
 
 
 function Home() {
 
     return (
         <div>
-            <p>Home</p>
+            <p>home</p>
         </div>
     )
 }
