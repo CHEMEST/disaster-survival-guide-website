@@ -1,11 +1,12 @@
 import React from 'react';
+import "./skillStyle.css";
 
 function Skills() {
     return (
         <div>
-            <p>skills</p>
+            <p id="test">skills</p>
         </div>
-    )
+    );
 }
 
 export default Skills;

@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home.jsx';
 import News from './News.jsx';
 import Location from './Location.jsx';
-import Skills from './Skills.jsx';
+import Skills from './skillsScreen/Skills.jsx';
 
 function App() {
   const [activeId, setActiveId] = useState(1); // Home is initially active
