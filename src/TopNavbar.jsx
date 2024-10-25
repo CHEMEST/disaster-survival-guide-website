@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 
 const navigationItems = [
   { name: 'Home', to: '/', id: 1 },
-  { name: 'Guide', to: '/guide', id: 2 },
+  { name: 'News', to: '/news', id: 2 },
+  { name: 'Location', to: '/location', id: 3},
+  { name: 'Skills', to: '/skills', id: 4}
 ];
 
 function classNames(...classes) {
@@ -28,7 +30,7 @@ export default function TopNavbar({ activeId, setActiveId }) {
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
               <h1 className='text-white'>
-                David's Guide to Learning Japanese
+                Disaster Survival
               </h1>
               <img
                 alt="Logo"

@@ -3,7 +3,9 @@ import TopNavbar from "./TopNavbar.jsx";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home.jsx';
-import Guide from './Guide.jsx';
+import News from './News.jsx';
+import Location from './Location.jsx';
+import Skills from './Skills.jsx';
 
 function App() {
   const [activeId, setActiveId] = useState(1); // Home is initially active
@@ -13,8 +15,10 @@ function App() {
       <Router>
         <TopNavbar activeId={activeId} setActiveId={setActiveId}/>
         <Routes>
-          <Route path="/" element={<Home setActiveId={setActiveId}/>} />
-          <Route path="/guide" element={<Guide />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/location" element={<Location />} />
+          <Route path="/skills" element={<Skills />} />
         </Routes>
       </Router>
     </div>

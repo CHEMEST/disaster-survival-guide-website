@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Guide() {
+function Location() {
     return (
         <div>
-            <p>f</p>
+            <p>Location</p>
         </div>
     )
 }
 
-export default Guide;
+export default Location;

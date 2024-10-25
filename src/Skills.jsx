@@ -1,13 +1,11 @@
 import React from 'react';
 
-
-function Home() {
-
+function Skills() {
     return (
         <div>
-            <p>Home</p>
+            <p>skills</p>
         </div>
     )
 }
 
-export default Home;
+export default Skills;
