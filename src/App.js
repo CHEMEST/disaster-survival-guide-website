@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home.jsx';
 import News from './News/News.jsx';
-import Location from './Location.jsx';
+import Location from './Location/Location.jsx';
 import Skills from './skillsScreen/Skills.jsx';
 
 function App() {

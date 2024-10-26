@@ -1,6 +1,4 @@
 import React from 'react';
-import GeocodingForm from './GeocodingForm';
-
 
 function Home() {
 
