@@ -1,16 +1,28 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import OverpassMap from './OverpassMap';
+import SearchField from './SearchField';
 
-import OverpassMap from './OverpassMap.js';
+function Location() {
+    const [featureType, setFeatureType] = useState('park'); // Default feature type
+    const [radius, setRadius] = useState(''); // Default feature type
 
-class Location extends Component {
 
-  render() {
+    const handleSearch = ({ inputValue, parameter, radius}) => {
+        console.log(radius)
+        setFeatureType(parameter); // Update the feature type state
+        setRadius(radius);
+    };
+
     return (
-      <div>
-        <OverpassMap />
-      </div>
+        <div className="flex h-screen">
+        <div className="w-1/4 p-4 bg-gray-100">
+            <SearchField onSearch={handleSearch} />
+        </div>
+        <div className="w-3/4">
+            <OverpassMap featureType={featureType} radius={radius}/>
+        </div>
+    </div>
     );
-  }
 }
 
 export default Location;
