@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ArticlesList from './ArticlesList';
-const apiKey = process.env.REACT_APP_NEWS_API_KEY;
+const apiKey = '170881a27ea24e7580c10d4638ccd154';
 
 const News = () => {
   const [articles, setArticles] = useState([]);
@@ -8,14 +8,21 @@ const News = () => {
   useEffect(() => {
       const fetchArticles = async () => {
         try {
-          console.log('API Key:', apiKey);
-          const response = await fetch(
-            `https://newsapi.org/v2/everything?q=technology&pageSize=100&apiKey=${apiKey}`
-          );
-          const data = await response.json();
-          console.log('API Response:', data);
+          console.log(`API Key: ${apiKey}`);
+          var url = 'https://newsapi.org/v2/everything?' +
+          'sortBy=popularity&' +
+          `apiKey=${apiKey}`;
+
+          var req = new Request(url);
+
+          fetch(req)
+              .then(function(response) {
+                  const data = response.json();
+                  console.log('API Response:', data);
+                  setArticles(data.articles);
+              })
           // Ensure the data is an array
-          setArticles(data.articles || []); // Default to an empty array if no articles
+           // Default to an empty array if no articles
         } catch (error) {
           console.error('Error fetching articles:', error);
           setArticles([]); // Default to an empty array on error

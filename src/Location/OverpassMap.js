@@ -84,6 +84,7 @@ const OverpassMap = ({ featureType, radius }) => {
             }
 
             const data = await response.json();
+            console.log(data)
             setFeatures(data.elements);
             setLoading(false);
         } catch (err) {
