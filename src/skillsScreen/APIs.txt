@@ -1,0 +1,9 @@
+https://github.com/Growstuff/growstuff/wiki/API-Version-0
+
+https://perenual.com/api/species-list?key=sk-fgyA671513267a85e7324
+
+https://rapidapi.com/aptitudeapps/api/usda-plant-hardiness-zones/playground/apiendpoint_3a236a1a-c965-4ebd-9d28-fe3a923f6a56
+
+https://rapidapi.com/fireside-worldwide-fireside-worldwide-default/api/plant-hardiness-zone
+
+`https://phzmapi.org/${zip}.json`
