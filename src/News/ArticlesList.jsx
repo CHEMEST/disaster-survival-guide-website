@@ -1,32 +1,30 @@
-// ArticlesList.jsx
-import React, { useEffect, useState } from 'react';
-import ArticleCard from './ArticlesList';
+// ArticlesList.js
+import React from 'react';
+import ArticleCard from './ArticleCard';
 
-const ArticlesList = ({ articles = [] }) => {
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    // Your data fetching logic goes here
-    setLoading(false);
-  }, []);
+const ArticlesList = ({ articles }) => {
+  //filtering
+  const filteredArticles = articles.filter(
+    (article) => article.title !== "[Removed]"
+  );
+  //in case there are no articles
+  if (!filteredArticles || filteredArticles.length === 0) {
+    return <p className="text-center text-gray-500">No articles available.</p>;
+  }
 
   return (
-    <div className="container mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {loading ? (
-        <p>Loading articles...</p>
-      ) : (
-        articles.map((article, index) => (
-          <ArticleCard
-            key={index}
-            title={article.title}
-            description={article.description}
-            imageUrl={article.urlToImage}
-            articleUrl={article.url}
-            source={article.source.name}
-            publishedAt={article.publishedAt}
-          />
-        ))
-      )}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {filteredArticles.map((article, index) => (
+        <ArticleCard
+          key={index}
+          title={article.title}
+          description={article.description}
+          url={article.url}
+          urlToImage={article.urlToImage}
+          author={article.author}
+          publishedAt={article.publishedAt}
+        />
+      ))}
     </div>
   );
 };
