@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMap, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -73,7 +73,7 @@ const OverpassMap = ({ featureType, radius }) => {
         try {
             const query = `
                 [out:json];
-                node["amenity"="${type}"](around: ${Number(radius)}, ${locLat}, ${locLong});
+                node["${type.split(',')[0]}"="${type.split(',')[1]}"](around: ${Number(radius)}, ${locLat}, ${locLong});
                 out body;
                 >;
                 out skel qt;
@@ -83,6 +83,8 @@ const OverpassMap = ({ featureType, radius }) => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
+            console.log(query)
+            console.log(response)
             const data = await response.json();
             setFeatures(data.elements);
             setLoading(false);
@@ -109,6 +111,15 @@ const OverpassMap = ({ featureType, radius }) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
+
+            {features.map((feature) => (
+                <Marker
+                    key={feature.id}
+                    position={[feature.lat, feature.lon]}
+                    icon={L.icon({ iconUrl: require('leaflet/dist/images/marker-icon.png') })}>
+                    <Popup>{feature.tags?.name || 'Unnamed Feature'}</Popup>
+                </Marker>
+            ))}
 
             {/* Example usage of DynamicMarker with different images and behaviors */}
             <DynamicMarker

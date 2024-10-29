@@ -3,12 +3,11 @@ import OverpassMap from './OverpassMap';
 import SearchField from './SearchField';
 
 function Location() {
-    const [featureType, setFeatureType] = useState('park'); // Default feature type
+    const [featureType, setFeatureType] = useState(["amenity", "fire_station"]); // Default feature type
     const [radius, setRadius] = useState(''); // Default feature type
 
 
     const handleSearch = ({ inputValue, parameter, radius}) => {
-        console.log(radius)
         setFeatureType(parameter); // Update the feature type state
         setRadius(radius);
     };

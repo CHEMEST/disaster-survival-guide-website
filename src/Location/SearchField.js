@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const SearchField = ({ onSearch }) => {
     const [inputValue, setInputValue] = useState('');
-    const [parameter, setParameter] = useState('park'); // Default parameter
+    const [parameter, setParameter] = useState(["amenity", "fire_station"]); // Default parameter
     const [radius, setRadius] = useState('');
 
     const handleSubmit = (e) => {
@@ -14,10 +14,8 @@ const SearchField = ({ onSearch }) => {
     return (
         <form onSubmit={handleSubmit}>
             <select value={parameter} onChange={(e) => setParameter(e.target.value)}>
-                <option value="park">Park</option>
-                <option value="restaurant">Restaurant</option>
-                <option value="school">School</option>
-                <option value="drinking_water">Drinking Water</option>
+                <option multiple={true} value={["amenity", "fire_station"]}>Fire Station</option>
+                <option multiple={true} value={["emergency", "fire_hydrant"]}>Fire Hydrant</option>
                 {/* Add more options as needed */}
             </select>
             {/* <input
