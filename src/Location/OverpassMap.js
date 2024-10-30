@@ -69,11 +69,11 @@ const OverpassMap = ({ featureType, radius }) => {
 
     const fetchFeatures = async (type, radius) => {
         if (locLat === null || locLong === null) return;
-
+        
         try {
             const query = `
                 [out:json];
-                node["${type.split(',')[0]}"="${type.split(',')[1]}"](around: ${Number(radius)}, ${locLat}, ${locLong});
+                node["${type[0]}"="${type[1]}"](around: ${Number(radius)}, ${locLat}, ${locLong});
                 out body;
                 >;
                 out skel qt;

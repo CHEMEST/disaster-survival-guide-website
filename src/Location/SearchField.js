@@ -14,8 +14,8 @@ const SearchField = ({ onSearch }) => {
     return (
         <form onSubmit={handleSubmit}>
             <select value={parameter} onChange={(e) => setParameter(e.target.value)}>
-                <option multiple={true} value={["amenity", "fire_station"]}>Fire Station</option>
-                <option multiple={true} value={["emergency", "fire_hydrant"]}>Fire Hydrant</option>
+                <option value={'["amenity", "fire_station"]'}>Fire Station</option>
+                <option value={'["emergency", "fire_hydrant"]'}>Fire Hydrant</option>
                 {/* Add more options as needed */}
             </select>
             {/* <input
