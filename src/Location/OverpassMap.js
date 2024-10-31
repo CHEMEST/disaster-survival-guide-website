@@ -90,7 +90,7 @@ const OverpassMap = ({ featureType, radius }) => {
         setFireLocations((prevLocations) =>
             prevLocations.map((fire) => ({
                 ...fire,
-                size: Math.min(fire.size + 0.1, 5), // Cap max size at 5
+                size: fire.size + 0.1
             }))
         );
     };
