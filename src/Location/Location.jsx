@@ -8,7 +8,12 @@ function Location() {
 
 
     const handleSearch = ({ inputValue, parameter, radius}) => {
-        setFeatureType(JSON.parse(parameter)); // Update the feature type state
+        if (typeof(parameter) == 'object'){
+            setFeatureType(parameter)
+        } else {
+            setFeatureType(JSON.parse(parameter)); // Update the feature type state
+        }
+
         setRadius(radius);
     };
 
