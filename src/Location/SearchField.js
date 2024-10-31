@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 
-const SearchField = ({ onSearch }) => {
+const SearchField = ({ onSearch, onToggleFires }) => {
     const [inputValue, setInputValue] = useState('');
     const [parameter, setParameter] = useState(["amenity", "fire_station"]); // Default parameter
     const [radius, setRadius] = useState('');
+    const [canAddFires, setCanAddFires] = useState(false); // State to control fire addition
 
     const handleSubmit = (e) => {
         e.preventDefault();
         onSearch({ inputValue, parameter, radius }); // Pass both the input value and selected parameter
         setInputValue(''); // Clear the input field
+    };
+
+    const handleCheckboxChange = () => {
+        setCanAddFires((prev) => !prev);
+        onToggleFires((prev) => !prev); // Notify parent component to toggle fire adding
     };
 
     return (
@@ -33,6 +39,17 @@ const SearchField = ({ onSearch }) => {
                 required
             />
             <button type="submit">Search</button>
+
+            <div>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={canAddFires}
+                        onChange={handleCheckboxChange}
+                    />
+                    Enable adding fires
+                </label>
+            </div>
         </form>
     );
 };
