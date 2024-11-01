@@ -1,98 +1,80 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// DynamicMarker component
-const DynamicMarker = ({ position, image, sizeFactor = 1, behavior }) => {
-    const map = useMap();
-    const markerRef = useRef(null);
-    const [iconSize, setIconSize] = useState(32); // Default size
-
-    // Create custom icon with dynamic size
-    const createCustomIcon = (size) => {
-        return new L.Icon({
-            iconUrl: image,
-            iconSize: [size, size],
-            iconAnchor: [size / 2, size],
-            popupAnchor: [0, -size],
-        });
-    };
-
-    useEffect(() => {
-        // Update icon size based on zoom
-        const updateIconSize = () => {
-            const zoomLevel = map.getZoom();
-            const newSize = 32 * (zoomLevel / 16) * sizeFactor; // Adjust size based on zoom and sizeFactor
-            setIconSize(newSize);
-        };
-
-        updateIconSize(); // Initial size update
-        map.on('zoom', updateIconSize); // Listen to zoom events
-
-        return () => {
-            map.off('zoom', updateIconSize);
-        };
-    }, [map, sizeFactor]);
-
-    useEffect(() => {
-        // Apply custom behavior to marker
-        if (markerRef.current && behavior) {
-            behavior(markerRef.current);
-        }
-    }, [behavior]);
+const FireMarkers = ({ fireLocations, addFireLocation }) => {
+    useMapEvents({
+        click(e) {
+            addFireLocation([e.latlng.lat, e.latlng.lng]);
+        },
+    });
 
     return (
-        <Marker
-            ref={markerRef}
-            position={position}
-            icon={createCustomIcon(iconSize)}
-        />
+        <>
+            {fireLocations.map((fire, index) => (
+                <Marker
+                    key={index}
+                    position={fire.location}
+                    icon={L.icon({
+                        iconUrl: require('./fire_icon.png'), // Path to fire icon image
+                        iconSize: [32 * fire.size, 32 * fire.size], // Scale size based on fire's growth
+                    })}
+                />
+            ))}
+        </>
     );
 };
 
-// OverpassMap component
-const OverpassMap = ({ featureType, radius }) => {
+const OverpassMap = ({ featureType, radius, canAddFires }) => {
     const [features, setFeatures] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [locLat, setLocLat] = useState(null);
     const [locLong, setLocLong] = useState(null);
+    const [fireLocations, setFireLocations] = useState([]); // State for fire locations
 
+    // Get user's current location
     useEffect(() => {
-        // Fetch user's current location
         navigator.geolocation.getCurrentPosition((position) => {
             setLocLat(position.coords.latitude);
             setLocLong(position.coords.longitude);
+            setLoading(false);
+        }, (error) => {
+            console.error("Geolocation error:", error);
+            setLoading(false); // Stop loading if geolocation fails
         });
     }, []);
 
+    // Fetch nearby features from Overpass API
     const fetchFeatures = async (type, radius) => {
         if (locLat === null || locLong === null) return;
 
         try {
             const query = `
                 [out:json];
-                node["amenity"="${type}"](around: ${Number(radius)}, ${locLat}, ${locLong});
+                node["${type[0]}"="${type[1]}"](around: ${Number(radius)}, ${locLat}, ${locLong});
                 out body;
                 >;
                 out skel qt;
             `;
             const response = await fetch(`http://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
             const data = await response.json();
             console.log(data)
             setFeatures(data.elements);
             setLoading(false);
         } catch (err) {
-            setError(err);
+            console.error("Fetch features error:", err);
             setLoading(false);
         }
     };
 
+    useEffect(() => {
+        console.log("canAddFires updated:", canAddFires);
+    }, [canAddFires]);
+
+    // Fetch features when location or parameters change
     useEffect(() => {
         if (locLat !== null && locLong !== null) {
             setLoading(true);
@@ -100,50 +82,59 @@ const OverpassMap = ({ featureType, radius }) => {
         }
     }, [locLat, locLong, featureType, radius]);
 
+    // Add a new fire location
+    const addFireLocation = (newLocation) => {
+        if (canAddFires) {
+            setFireLocations((prevLocations) => [
+                ...prevLocations,
+                { location: newLocation, size: 1 },
+            ]);
+        }
+    };
+
+    // Increase fire size periodically
+    const spreadFire = () => {
+        setFireLocations((prevLocations) =>
+            prevLocations.map((fire) => ({
+                ...fire,
+                size: fire.size + 0.1
+            }))
+        );
+    };
+
+    // Set an interval to increase fire size over time
+    useEffect(() => {
+        const interval = setInterval(spreadFire, 1000); // Grow fire every second
+        return () => clearInterval(interval);
+    }, []);
+
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error fetching data: {error.message}</div>;
     if (locLat === null || locLong === null) return <div>Locating...</div>;
 
     return (
-        <MapContainer center={[locLat, locLong]} zoom={16} style={{ height: '100%', minHeight: '100%', width: '100%' }}>
+        <MapContainer
+            center={[locLat, locLong]}
+            zoom={16}
+            style={{ height: '100%', width: '100%' }}
+        >
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
 
-            {/* Example usage of DynamicMarker with different images and behaviors */}
-            <DynamicMarker
-                position={[locLat, locLong]}
-                image={require('./charmand_derp.png')}
-                sizeFactor={1}
-                behavior={(marker) => {
-                    // Example pulsing behavior
-                    setInterval(() => {
-                        marker.setLatLng([
-                            marker.getLatLng().lat + 0.0001,
-                            marker.getLatLng().lng + 0.0001,
-                        ]);
-                    }, 1000);
-                }}
-            />
+            {/* Render queried features as markers */}
+            {features.map((feature) => (
+                <Marker
+                    key={feature.id}
+                    position={[feature.lat, feature.lon]}
+                    icon={L.icon({ iconUrl: require('leaflet/dist/images/marker-icon.png') })}
+                >
+                    <Popup>{feature.tags?.name || 'Unnamed Feature'}</Popup>
+                </Marker>
+            ))}
 
-            <DynamicMarker
-                position={[locLat + 0.002, locLong + 0.002]}
-                image={require('./logo512.png')}
-                sizeFactor={1.5}
-                behavior={(marker) => {
-                    // Example bouncing effect
-                    let isUp = true;
-                    setInterval(() => {
-                        const latChange = isUp ? 0.0001 : -0.0001;
-                        marker.setLatLng([
-                            marker.getLatLng().lat + latChange,
-                            marker.getLatLng().lng,
-                        ]);
-                        isUp = !isUp;
-                    }, 500);
-                }}
-            />
+            {/* Render fire markers and handle map clicks */}
+            <FireMarkers fireLocations={fireLocations} addFireLocation={addFireLocation} canAddFires={canAddFires}/>
         </MapContainer>
     );
 };

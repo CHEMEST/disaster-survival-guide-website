@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-const SearchField = ({ onSearch }) => {
+const SearchField = ({ onSearch, onToggleFires }) => {
     const [inputValue, setInputValue] = useState('');
-    const [parameter, setParameter] = useState('park'); // Default parameter
+    const [parameter, setParameter] = useState(["amenity", "fire_station"]); // Default parameter
     const [radius, setRadius] = useState('');
+    const [canAddFires, setCanAddFires] = useState(false); // State to control fire addition
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -11,13 +12,16 @@ const SearchField = ({ onSearch }) => {
         setInputValue(''); // Clear the input field
     };
 
+    const handleCheckboxChange = () => {
+        setCanAddFires((prev) => !prev);
+        onToggleFires((prev) => !prev); // Notify parent component to toggle fire adding
+    };
+
     return (
         <form onSubmit={handleSubmit}>
             <select value={parameter} onChange={(e) => setParameter(e.target.value)}>
-                <option value="park">Park</option>
-                <option value="restaurant">Restaurant</option>
-                <option value="school">School</option>
-                <option value="drinking_water">Drinking Water</option>
+                <option value={'["amenity", "fire_station"]'}>Fire Station</option>
+                <option value={'["emergency", "fire_hydrant"]'}>Fire Hydrant</option>
                 {/* Add more options as needed */}
             </select>
             {/* <input
@@ -35,6 +39,17 @@ const SearchField = ({ onSearch }) => {
                 required
             />
             <button type="submit">Search</button>
+
+            <div>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={canAddFires}
+                        onChange={handleCheckboxChange}
+                    />
+                    Enable adding fires
+                </label>
+            </div>
         </form>
     );
 };
