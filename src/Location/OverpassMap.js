@@ -26,13 +26,12 @@ const FireMarkers = ({ fireLocations, addFireLocation }) => {
     );
 };
 
-const OverpassMap = ({ featureType, radius }) => {
+const OverpassMap = ({ featureType, radius, canAddFires }) => {
     const [features, setFeatures] = useState([]);
     const [loading, setLoading] = useState(true);
     const [locLat, setLocLat] = useState(null);
     const [locLong, setLocLong] = useState(null);
     const [fireLocations, setFireLocations] = useState([]); // State for fire locations
-    const [canAddFires, setCanAddFires] = useState(false); // State for controlling fire addition
 
     // Get user's current location
     useEffect(() => {
@@ -70,6 +69,10 @@ const OverpassMap = ({ featureType, radius }) => {
         }
     };
 
+    useEffect(() => {
+        console.log("canAddFires updated:", canAddFires);
+    }, [canAddFires]);
+
     // Fetch features when location or parameters change
     useEffect(() => {
         if (locLat !== null && locLong !== null) {
@@ -80,11 +83,12 @@ const OverpassMap = ({ featureType, radius }) => {
 
     // Add a new fire location
     const addFireLocation = (newLocation) => {
-        if (canAddFires)
-        setFireLocations((prevLocations) => [
-            ...prevLocations,
-            { location: newLocation, size: 1 },
-        ]);
+        if (canAddFires) {
+            setFireLocations((prevLocations) => [
+                ...prevLocations,
+                { location: newLocation, size: 1 },
+            ]);
+        }
     };
 
     // Increase fire size periodically

@@ -19,8 +19,7 @@ function Location() {
 
     // Handler to toggle the ability to add fires
     const handleToggleFires = (value) => {
-        setCanAddFires(value);
-        console.log(value)
+        setCanAddFires((prevCanAddFires) => !prevCanAddFires);
     };
 
     return (
