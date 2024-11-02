@@ -5,6 +5,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: {
+          text: 'd4dbfa',
+          DEFAULT: '#8291f1',
+        },
+        secondary: {
+          text: '050b29',
+          DEFAULT: '#95116f',
+        },
+        accent: '#e93d57',
+        background: '#02030e',
+      },
       keyframes: {
         scroll: {
           '0%': { transform: 'translateX(100%)' },
