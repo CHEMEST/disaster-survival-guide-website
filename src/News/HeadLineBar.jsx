@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeadlineBar = ({ articles }) => {
   return (
-    <div className="bg-secondary text-text-secondary pt-6 pb-4 px-4 shadow-md overflow-hidden sticky top-12 z-10">
+    <div className="bg-secondary text-text pt-6 pb-4 px-4 shadow-md overflow-hidden sticky top-12 z-10">
       <div className="whitespace-nowrap flex animate-scroll">
         {articles.map((article, index) => (
           <a

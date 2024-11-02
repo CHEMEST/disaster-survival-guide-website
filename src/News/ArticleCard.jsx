@@ -14,11 +14,11 @@ const ArticleCard = ({ title, description, url, urlToImage, author, publishedAt 
   return (
     <div
       onClick={handleClick}
-      className={`relative bg-primary rounded-xl shadow-md overflow-hidden transition-transform duration-300 ease-in-out border border-secondary cursor-pointer ${
-        isAnimating ? 'animate-expand' : 'hover:shadow-lg'
+      className={`relative bg-secondary rounded-xl shadow-md overflow-hidden transition-transform duration-300 ease-in-out border border-secondary cursor-pointer ${
+        isAnimating ? 'animate-expand' : 'hover:shadow-primary'
       }`}
     >
-      <div className="p-4 border-b border-tertiary">
+      <div className="p-4 border-b">
         <h2 className="text-lg font-semibold text-text mb-1">{title}</h2>
       </div>
       {urlToImage && (
