@@ -11,7 +11,7 @@ const FireMarkers = ({ fireLocations, zoom }) => {
                     key={index}
                     position={fire.location}
                     icon={L.icon({
-                        iconUrl: require('./fire_icon.png'), // Path to fire icon image
+                        iconUrl: require('./fire_moving.gif'), // Path to fire icon image
                         iconSize: [32 * fire.size * (zoom / 16), 32 * fire.size * (zoom / 16)], // Scale size based on fire's growth and zoom level
                     })}
                 />
@@ -32,20 +32,19 @@ const MapEventHandler = ({ setZoom, addFireLocation }) => {
     return null;
 };
 
-const OverpassMap = ({ featureType, radius, canAddFires }) => {
+const OverpassMap = ({ featureType, radius, fireInfo, isSimulating }) => {
     const [features, setFeatures] = useState([]);
     const [loading, setLoading] = useState(true);
     const [locLat, setLocLat] = useState(null);
     const [locLong, setLocLong] = useState(null);
     const [fireLocations, setFireLocations] = useState([]);
     const [zoom, setZoom] = useState(16);
-    const MAX_FIRE_SIZE = 6;
+    const MAX_FIRE_SIZE = 100;
 
     const worldBounds = L.latLngBounds(
-        L.latLng(-85, -180), // Southwest corner of the world
-        L.latLng(85, 180) // Northeast corner of the world
+        L.latLng(-85, -180),
+        L.latLng(85, 180)
     );
-
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -89,7 +88,7 @@ const OverpassMap = ({ featureType, radius, canAddFires }) => {
     }, [locLat, locLong, featureType, radius]);
 
     const addFireLocation = (newLocation) => {
-        if (canAddFires) {
+        if (fireInfo.canAddFires) {
             setFireLocations((prevLocations) => [
                 ...prevLocations,
                 { location: newLocation, size: 1 },
@@ -98,10 +97,15 @@ const OverpassMap = ({ featureType, radius, canAddFires }) => {
     };
 
     const spreadFire = () => {
+        if (!isSimulating) return; // Stop spreading if simulation is off
+
+        const windSpeed = fireInfo.windSpeed || 0;
+        const forwardRateOfSpread = windSpeed * 0.1;
+
         setFireLocations((prevLocations) =>
             prevLocations.map((fire) => ({
                 ...fire,
-                size: Math.min(fire.size + 0.1, MAX_FIRE_SIZE)
+                size: Math.min(fire.size + forwardRateOfSpread / 10, MAX_FIRE_SIZE)
             }))
         );
     };
@@ -109,7 +113,7 @@ const OverpassMap = ({ featureType, radius, canAddFires }) => {
     useEffect(() => {
         const interval = setInterval(spreadFire, 1000);
         return () => clearInterval(interval);
-    }, []);
+    }, [fireInfo.windSpeed, isSimulating]);
 
     if (loading) return <div>Loading...</div>;
     if (locLat === null || locLong === null) return <div>Locating...</div>;
