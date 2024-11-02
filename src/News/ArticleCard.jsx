@@ -14,19 +14,19 @@ const ArticleCard = ({ title, description, url, urlToImage, author, publishedAt 
   return (
     <div
       onClick={handleClick}
-      className={`relative bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 ease-in-out border border-gray-200 cursor-pointer ${
+      className={`relative bg-primary rounded-xl shadow-md overflow-hidden transition-transform duration-300 ease-in-out border border-secondary cursor-pointer ${
         isAnimating ? 'animate-expand' : 'hover:shadow-lg'
       }`}
     >
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-800 mb-1">{title}</h2>
+      <div className="p-4 border-b border-tertiary">
+        <h2 className="text-lg font-semibold text-text mb-1">{title}</h2>
       </div>
       {urlToImage && (
         <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url(${urlToImage})` }} />
       )}
       <div className="p-4">
-        <p className="text-gray-700 mb-2">{description}</p>
-        <div className="text-gray-500 text-sm">
+        <p className="text-text-secondary mb-2">{description}</p>
+        <div className="text-text-tertiary text-sm">
           <p>By: {author || 'Unknown'}</p>
           <p>Published: {new Date(publishedAt).toLocaleDateString()}</p>
         </div>
