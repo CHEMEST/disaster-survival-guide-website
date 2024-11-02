@@ -1,0 +1,219 @@
+html{
+  padding: 10px;
+}
+
+*{
+  margin: 0;
+}
+
+@property --scrollLocation{
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --globalScale{
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+#historyContent{
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  border: 2px solid black;
+  position: relative;
+  margin: 0;
+}
+
+#historyContent .slide{
+  --offset: 0;
+  margin: 0;
+  position: absolute;
+  background-color: gray;
+  border: 2px solid black;
+  width: 100%;
+  height: 100%;
+  transform: scale(var(--globalScale));
+  left: calc((var(--offset) - var(--scrollLocation)) * 100%);
+}
+
+#timeline{
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 30%;
+  transform-origin: top;
+  transform: scale(0.4, 0.2);
+  top: 0%;
+  left: 0%;
+  right: 0%;
+  margin-inline: auto;
+  border: 2px solid black;
+  z-index: 3;
+  background-color: rgb(255, 255, 255, 0.8);
+  border-radius: 0 0 10px 10px;
+}
+
+.timelineChildren{
+  --width: 40%;
+  --margin: 10%;
+  --offset: 0;
+  --centerPosition: calc(50% + (var(--offset) - var(--scrollLocation)) * (var(--margin) + var(--width)));
+  position: absolute;
+  left: calc(var(--centerPosition) - var(--width)/2);
+  transform: scale(calc(100% - max(50% - var(--centerPosition), var(--centerPosition) - 50%)));
+  width: var(--width);
+  height: 100%;
+}
+
+.timelineChildren h3{
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  top: 45%;
+  transform: scale(1.5, 3) translate(0, -15%);
+  font-size: 7ex;
+}
+
+#dropDownMenu{
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  width: 20%;
+  z-index: 3;
+  transition: top 1s, box-shadow 1s;
+}
+
+#dropDownMenu.hideNav{
+  top: -100%;
+}
+
+#dropDownMenuTitle{
+  width: 100%;
+  height: 5%;
+  background-color: rgb(255, 255, 255, 1);
+  text-align: center;
+  font-size: 20pt;
+  padding: 0px 0;
+}
+
+#dropDownMenuContent{
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: red;
+  transition: height 0.5s;
+}
+
+#dropDownMenuContent h3{
+  width: 90%;
+  margin-inline: auto;
+  background-color: rgb(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+#dropDownMenu:hover{
+  box-shadow: 5px 5px 10px rgb(0, 0, 0, 0.5);
+}
+
+#moveLeftButton, #moveRightButton{
+  position: absolute;
+  background-color: rgb(255, 255, 255, 0.8);
+  top: 50%;
+  height: 10%;
+  width: 5%;
+  padding: 2px;
+}
+
+#moveLeftButton{
+  left: 1%;
+  text-align: right;
+  clip-path: polygon(0% 50%, 100% 0, 100% 100%);
+  transition: left 1s, box-shadow 1s;
+  animation: 2s infinite cubic-bezier(0.5, 0, 0, 0.5) bounceRight;
+}
+
+#moveLeftButton:hover {
+  box-shadow: -10px 5px 5px black;
+}
+
+#moveLeftButton.hideNav{
+  left: -100%;
+}
+
+#moveRightButton{
+  top: 50%;
+  right: 1%;
+  text-align: left;
+  clip-path: polygon(0% 0%, 0% 100%, 100% 50%);
+  transition: right 1s, box-shadow 1s;
+  animation: 2s infinite cubic-bezier(0.5, 0, 0, 0.5) bounceLeft;
+}
+
+#moveRightButton:hover {
+  box-shadow: 10px 5px 5px black;
+}
+
+#moveRightButton.hideNav{
+  right: -100%;
+}
+
+@keyframes bounceLeft{
+  0%{
+    transform: translate(0, 0);
+  }
+  50%{
+    transform: translate(-15%, 0);
+  }
+  100%{
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes bounceRight{
+  0%{
+    transform: translate(0, 0);
+  }
+  50%{
+    transform: translate(15%, 0);
+  }
+  100%{
+    transform: translate(0, 0);
+  }
+}
+
+.slideContent{
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  max-height: 80%;
+  max-width: 80%;
+  top: calc(10% - 5px);
+  left: calc(10% - 5px);
+  border: 2px solid black;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.slideContent > div{
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-height: 90%;
+}
+
+.slideContent > div > img {
+  height: 100%;
+}
+
+.slideContent > div > p{
+  padding: 10px;
+}
+
+.slideContent > h1{
+  height: 10%;
+  text-align: center;
+}
