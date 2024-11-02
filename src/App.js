@@ -1,8 +1,6 @@
 import './App.css';
 import TopNavbar from "./TopNavbar.jsx";
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './Home.jsx';
 import News from './News/News.jsx';
 import Location from './Location/Location.jsx';
 import Skills from './skillsScreen/Skills.jsx';
@@ -12,15 +10,10 @@ function App() {
 
   return (
     <div>
-      <Router>
-        <TopNavbar activeId={activeId} setActiveId={setActiveId}/>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/location" element={<Location />} />
-          <Route path="/skills" element={<Skills />} />
-        </Routes>
-      </Router>
+      <TopNavbar activeId={activeId} setActiveId={setActiveId}/>
+      <Skills />
+      <Location />
+      <News />
     </div>
   );
 }

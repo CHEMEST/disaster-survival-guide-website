@@ -3,13 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const FireMarkers = ({ fireLocations, addFireLocation }) => {
-    useMapEvents({
-        click(e) {
-            addFireLocation([e.latlng.lat, e.latlng.lng]);
-        },
-    });
-
+const FireMarkers = ({ fireLocations, zoom }) => {
     return (
         <>
             {fireLocations.map((fire, index) => (
@@ -17,8 +11,8 @@ const FireMarkers = ({ fireLocations, addFireLocation }) => {
                     key={index}
                     position={fire.location}
                     icon={L.icon({
-                        iconUrl: require('./fire_icon.png'), // Path to fire icon image
-                        iconSize: [32 * fire.size, 32 * fire.size], // Scale size based on fire's growth
+                        iconUrl: require('./fire_moving.gif'), // Path to fire icon image
+                        iconSize: [32 * fire.size * (zoom / 16), 32 * fire.size * (zoom / 16)], // Scale size based on fire's growth and zoom level
                     })}
                 />
             ))}
@@ -26,14 +20,32 @@ const FireMarkers = ({ fireLocations, addFireLocation }) => {
     );
 };
 
-const OverpassMap = ({ featureType, radius, canAddFires }) => {
+const MapEventHandler = ({ setZoom, addFireLocation }) => {
+    useMapEvents({
+        zoomend: (e) => {
+            setZoom(e.target.getZoom());
+        },
+        click: (e) => {
+            addFireLocation([e.latlng.lat, e.latlng.lng]);
+        }
+    });
+    return null;
+};
+
+const OverpassMap = ({ featureType, radius, fireInfo, isSimulating }) => {
     const [features, setFeatures] = useState([]);
     const [loading, setLoading] = useState(true);
     const [locLat, setLocLat] = useState(null);
     const [locLong, setLocLong] = useState(null);
-    const [fireLocations, setFireLocations] = useState([]); // State for fire locations
+    const [fireLocations, setFireLocations] = useState([]);
+    const [zoom, setZoom] = useState(16);
+    const MAX_FIRE_SIZE = 100;
 
-    // Get user's current location
+    const worldBounds = L.latLngBounds(
+        L.latLng(-85, -180),
+        L.latLng(85, 180)
+    );
+
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             setLocLat(position.coords.latitude);
@@ -41,11 +53,10 @@ const OverpassMap = ({ featureType, radius, canAddFires }) => {
             setLoading(false);
         }, (error) => {
             console.error("Geolocation error:", error);
-            setLoading(false); // Stop loading if geolocation fails
+            setLoading(false);
         });
     }, []);
 
-    // Fetch nearby features from Overpass API
     const fetchFeatures = async (type, radius) => {
         if (locLat === null || locLong === null) return;
 
@@ -61,7 +72,6 @@ const OverpassMap = ({ featureType, radius, canAddFires }) => {
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
             const data = await response.json();
-            console.log(data)
             setFeatures(data.elements);
             setLoading(false);
         } catch (err) {
@@ -71,20 +81,14 @@ const OverpassMap = ({ featureType, radius, canAddFires }) => {
     };
 
     useEffect(() => {
-        console.log("canAddFires updated:", canAddFires);
-    }, [canAddFires]);
-
-    // Fetch features when location or parameters change
-    useEffect(() => {
         if (locLat !== null && locLong !== null) {
             setLoading(true);
             fetchFeatures(featureType, radius);
         }
     }, [locLat, locLong, featureType, radius]);
 
-    // Add a new fire location
     const addFireLocation = (newLocation) => {
-        if (canAddFires) {
+        if (fireInfo.canAddFires) {
             setFireLocations((prevLocations) => [
                 ...prevLocations,
                 { location: newLocation, size: 1 },
@@ -92,21 +96,24 @@ const OverpassMap = ({ featureType, radius, canAddFires }) => {
         }
     };
 
-    // Increase fire size periodically
     const spreadFire = () => {
+        if (!isSimulating) return; // Stop spreading if simulation is off
+
+        const windSpeed = fireInfo.windSpeed || 0;
+        const forwardRateOfSpread = windSpeed * 0.1;
+
         setFireLocations((prevLocations) =>
             prevLocations.map((fire) => ({
                 ...fire,
-                size: fire.size + 0.1
+                size: Math.min(fire.size + forwardRateOfSpread / 10, MAX_FIRE_SIZE)
             }))
         );
     };
 
-    // Set an interval to increase fire size over time
     useEffect(() => {
-        const interval = setInterval(spreadFire, 1000); // Grow fire every second
+        const interval = setInterval(spreadFire, 1000);
         return () => clearInterval(interval);
-    }, []);
+    }, [fireInfo.windSpeed, isSimulating]);
 
     if (loading) return <div>Loading...</div>;
     if (locLat === null || locLong === null) return <div>Locating...</div>;
@@ -115,6 +122,9 @@ const OverpassMap = ({ featureType, radius, canAddFires }) => {
         <MapContainer
             center={[locLat, locLong]}
             zoom={16}
+            maxBoundsViscosity={1.0}
+            maxBounds={worldBounds}
+            minZoom={2}
             style={{ height: '100%', width: '100%' }}
         >
             <TileLayer
@@ -122,7 +132,6 @@ const OverpassMap = ({ featureType, radius, canAddFires }) => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
 
-            {/* Render queried features as markers */}
             {features.map((feature) => (
                 <Marker
                     key={feature.id}
@@ -133,8 +142,8 @@ const OverpassMap = ({ featureType, radius, canAddFires }) => {
                 </Marker>
             ))}
 
-            {/* Render fire markers and handle map clicks */}
-            <FireMarkers fireLocations={fireLocations} addFireLocation={addFireLocation} canAddFires={canAddFires}/>
+            <MapEventHandler setZoom={setZoom} addFireLocation={addFireLocation} />
+            <FireMarkers fireLocations={fireLocations} zoom={zoom} />
         </MapContainer>
     );
 };

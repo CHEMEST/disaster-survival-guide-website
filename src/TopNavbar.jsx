@@ -3,10 +3,9 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 
 const navigationItems = [
-  { name: 'Home', to: '/', id: 1 },
-  { name: 'News', to: '/news', id: 2 },
-  { name: 'Location', to: '/location', id: 3},
-  { name: 'Skills', to: '/skills', id: 4}
+  { name: 'Skills', to: '#skills', id: 1},
+  { name: 'Location', to: '#location', id: 2},
+  { name: 'News', to: '#news', id: 3 },
 ];
 
 function classNames(...classes) {
@@ -41,10 +40,17 @@ export default function TopNavbar({ activeId, setActiveId }) {
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {navigationItems.map((item) => (
-                  <Link
+                  <a
                     key={item.id}
-                    to={item.to}
-                    onClick={() => setActiveId(item.id)}
+                    href={item.to} // Use href to point to the target section
+                    onClick={() => {
+                      setActiveId(item.id);
+                      // Optional: Prevent default behavior for smooth scrolling
+                      const targetElement = document.getElementById(item.to.slice(1)); // Assuming 'to' has a '#' prefix
+                      if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
                     className={classNames(
                       activeId === item.id ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                       'rounded-md px-3 py-2 text-sm font-medium',
@@ -52,7 +58,8 @@ export default function TopNavbar({ activeId, setActiveId }) {
                     aria-current={activeId === item.id ? 'page' : undefined}
                   >
                     {item.name}
-                  </Link>
+                  </a>
+
                 ))}
               </div>
             </div>
