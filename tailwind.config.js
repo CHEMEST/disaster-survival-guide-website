@@ -11,15 +11,20 @@ module.exports = {
         },
         secondary: {
           DEFAULT: '#95116f',
+          dark: '620848',
         },
         text: {
           DEFAULT: '#d6dcfa',
-          secondary: '#8a8fa9',
-          tertiary: '#aeb3d1',
+          secondary: '#aeb3d1',
+          tertiary: '#8a8fa9',
           dark: '050b29',
         },
         accent: '#e93d57',
         background: '#02030e',
+
+        boxShadow: {
+          'primary': '0 16px 24px rgba(74, 144, 226, 0.5)',
+        },
       },
       keyframes: {
         scroll: {
