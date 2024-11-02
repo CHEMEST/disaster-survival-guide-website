@@ -34,12 +34,12 @@ const News = () => {
   const topArticles = articles.slice(0, 5);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-background">
       <HeadlineBar articles={topArticles} />
       <div className="container mx-auto py-10">
-        <h1 className="text-5xl font-bold text-center mb-10">Latest News</h1>
+        <h1 className="text-5xl font-bold text-center mb-10 text-text">Latest News</h1>
         {loading ? (
-          <p className="text-center text-gray-500">Loading articles...</p>
+          <p className="text-center text-secondary">Loading articles...</p>
         ) : (
           <ArticlesList articles={articles} />
         )}
