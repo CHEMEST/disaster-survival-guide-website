@@ -25,6 +25,8 @@ function initializeScroll() {
   let lastScrollTop = content.scrollTop; // Start with the current scroll position
 
   content.addEventListener("scroll", () => {
+    
+
     const scrollTop = content.scrollTop; // Get the current vertical scroll position
 
     if (scrollTop > lastScrollTop && scrollInfo.loc < scrollInfo.numSlides - 1) {

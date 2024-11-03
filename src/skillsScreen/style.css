@@ -29,6 +29,17 @@ html{
   margin: 0;
 }
 
+#historyContent::-webkit-scrollbar {
+  display: none;
+}
+
+
+@supports(overflow-y: -moz-scrollbars-none){
+  #historyContent{
+    overflow-y: -moz-scrollbars-none;
+  }
+}
+
 #historyContent .slide{
   --offset: 0;
   margin: 0;
