@@ -12,6 +12,7 @@ const ArticleCard = ({ title, description, url, urlToImage, author, publishedAt 
   };
 
   return (
+    <div>
 <div
   onClick={handleClick}
   className={`relative bg-primary rounded-xl shadow-md overflow-hidden transition-transform duration-300 ease-in-out cursor-pointer 
@@ -31,6 +32,7 @@ const ArticleCard = ({ title, description, url, urlToImage, author, publishedAt 
           <p>Published: {new Date(publishedAt).toLocaleDateString()}</p>
         </div>
       </div>
+    </div>
     </div>
   );
 };
