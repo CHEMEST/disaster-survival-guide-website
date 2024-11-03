@@ -27,8 +27,7 @@ export default function TopNavbar({ activeId, setActiveId }) {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <h1 className="text-white">Disaster Survival</h1>
-              <img alt="Logo" src="/rhino64x64.png" className="h-8 w-auto" />
+              <img alt="Logo" src="/fireLogo.png" className="h-8 w-auto" />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
