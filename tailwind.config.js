@@ -19,10 +19,8 @@ module.exports = {
           tertiary: '#808080',
         },
         accent:{
-          'yellow': '#FFB029',
-          'yellow-dim': '#AE781AFF',
-          'red': '#ff3744',
-          'red-dim': '#b72831',
+          DEFAULT: '#ff3744',
+          dim: '#b72831',
         },
         background: {
           DEFAULT: '#181818',
