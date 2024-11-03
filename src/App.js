@@ -11,13 +11,17 @@ function App() {
   return (
     <div className="flex flex-col h-screen">
       {/* Navbar */}
-      <TopNavbar activeId={activeId} setActiveId={setActiveId} />
+      
+      
 
       {/* Main Content */}
       <div className="flex-grow overflow-auto">
+        {/* <div id="navbar">
+          <TopNavbar activeId={activeId} setActiveId={setActiveId} />
+        </div> */}
         <Skills />
-        <Location />
-        <News />
+        {/* <Location />
+        <News /> */}
       </div>
     </div>
   );

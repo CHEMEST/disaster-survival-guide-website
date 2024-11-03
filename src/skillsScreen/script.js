@@ -18,6 +18,18 @@ export default function Initialize(){
   // initializeTimeline();
   initializeNavs();
   initializeScroll();
+  // initializeContentSizing();
+}
+
+function initializeContentSizing(){
+  const parent = window.document.getElementById("historyContent");
+  const update = function(){
+    const nav = window.document.getElementById("navbar");
+    console.log(nav.getBoundingClientRect());
+    parent.style.height = `calc(100vh - ${nav.getBoundingClientRect().height}px)`;
+  }
+  update();
+  window.onresize = update;
 }
 
 function initializeScroll() {
@@ -25,9 +37,14 @@ function initializeScroll() {
   let lastScrollTop = content.scrollTop; // Start with the current scroll position
 
   content.addEventListener("scroll", () => {
-    
 
     const scrollTop = content.scrollTop; // Get the current vertical scroll position
+    if(scrollInfo.isRunning){
+      lastScrollTop = scrollTop; // Update last scroll position
+      return;
+    }
+
+    
 
     if (scrollTop > lastScrollTop && scrollInfo.loc < scrollInfo.numSlides - 1) {
       // Detect downward scroll and trigger slide change
