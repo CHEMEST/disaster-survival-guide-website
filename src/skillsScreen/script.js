@@ -14,12 +14,12 @@ export function isAnimationRunning(){return scrollInfo.isRunning;}
 
 //Initializes all basic info
 //selects the scroll location upon loading
-export default function Initialize(){
+export default function Initialize(setActiveId){
   console.log("js works");
   initializeSliding();
   // initializeTimeline();
   // initializeNavs();
-  initializeScroll();
+  initializeScroll(setActiveId);
   // initializeContentSizing();
 }
 
@@ -34,29 +34,31 @@ function initializeContentSizing(){
   window.onresize = update;
 }
 
-function initializeScroll() {
+function initializeScroll(setActiveId) {
   const content = window.document.getElementById("historyContent");
-  let lastScrollTop = content.scrollTop; // Start with the current scroll position
+  let lastScrollTop = content.scrollTop;
 
   content.addEventListener("scroll", () => {
+    const scrollTop = content.scrollTop;
 
-    const scrollTop = content.scrollTop; // Get the current vertical scroll position
-    if(scrollInfo.isRunning){
-      lastScrollTop = scrollTop; // Update last scroll position
+    if (scrollInfo.isRunning) {
+      lastScrollTop = scrollTop;
       return;
     }
 
-    
-
     if (scrollTop > lastScrollTop && scrollInfo.loc < scrollInfo.numSlides - 1) {
       // Detect downward scroll and trigger slide change
-      switchSlides(current => current + 1);
+      switchSlides((loc) => loc + 1);
+      const newLoc = scrollInfo.loc + 1; // Update new location
+      setActiveId(newLoc); // Update activeId to the new location
     } else if (scrollTop < lastScrollTop && scrollInfo.loc > 0) {
       // Detect upward scroll and trigger slide change
-      switchSlides(current => current - 1);
+      switchSlides((loc) => loc - 1);
+      const newLoc = scrollInfo.loc - 1; // Update new location
+      setActiveId(newLoc); // Update activeId to the new location
     }
 
-    lastScrollTop = scrollTop; // Update last scroll position
+    lastScrollTop = scrollTop;
   });
 }
 

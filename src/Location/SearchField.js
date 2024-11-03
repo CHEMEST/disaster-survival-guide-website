@@ -105,7 +105,7 @@ const SearchField = ({ onSearch, onFireInfoChange, onSimulationToggle }) => {
                                 <button
                     onClick={toggleSimulation}
                     className={`w-full py-2 rounded-md transition-colors duration-200 ${
-                        isSimulating ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'
+                        isSimulating ? 'bg-red-500 text-text' : 'bg-white text-gray-700'
                     }`}
                     disabled={!fireInfo.windSpeed} // Only enable if wind speed is provided
                 >
