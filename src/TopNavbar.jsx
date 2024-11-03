@@ -2,16 +2,18 @@ import { Disclosure, DisclosureButton } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const navigationItems = [
-  { name: 'Skills', to: '#skills', id: 1 },
-  { name: 'Location', to: '#location', id: 2 },
-  { name: 'News', to: '#news', id: 3 },
+  { name: 'Discovery', to: '#discovery', id: 0 },
+  { name: 'Destruction', to: '#distruction', id: 1 },
+  { name: 'Modern', to: '#modern', id: 2 },
+  { name: 'Map', to: '#map', id: 3 },
+  { name: 'News', to: '#news', id: 4 },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function TopNavbar({ activeId, setActiveId }) {
+export default function TopNavbar({ activeId, setActiveId, switchSlides }) {
   return (
     <Disclosure as="nav" className="bg-red-900 sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -38,10 +40,7 @@ export default function TopNavbar({ activeId, setActiveId }) {
                     onClick={(e) => {
                       e.preventDefault(); // Prevent default anchor behavior
                       setActiveId(item.id);
-                      const targetElement = document.getElementById(item.to.slice(1)); // Remove "#" for the id
-                      if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll
-                      }
+                      switchSlides(() => item.id); // Trigger slide animation
                     }}
                     className={classNames(
                       activeId === item.id ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
@@ -66,12 +65,9 @@ export default function TopNavbar({ activeId, setActiveId }) {
               as="a"
               href={item.to}
               onClick={(e) => {
-                e.preventDefault();
+                e.preventDefault(); // Prevent default anchor behavior
                 setActiveId(item.id);
-                const targetElement = document.getElementById(item.to.slice(1));
-                if (targetElement) {
-                  targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
+                switchSlides(() => item.id); // Trigger slide animation
               }}
               className={classNames(
                 activeId === item.id ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
