@@ -30,20 +30,22 @@ function Location() {
 
     return (
         <div className="flex h-full w-full">
-            <div className="w-1/4 p-4 bg-gray-100">
+            <div className="w-1/4 p-4 bg-background">
                 <SearchField
                     onSearch={handleSearch}
                     onFireInfoChange={handleFireInfoChange}
                     onSimulationToggle={handleSimulationToggle}
                 />
             </div>
-            <div className="w-3/4">
-                <OverpassMap
-                    featureType={featureType}
-                    radius={radius}
-                    fireInfo={fireInfo}
-                    isSimulating={isSimulating}
-                />
+            <div className="w-3/4 p-4 flex justify-center items-center bg-background"> {/* Center the map */}
+                <div className="bg-background rounded-lg w-full h-full">
+                    <OverpassMap
+                        featureType={featureType}
+                        radius={radius}
+                        fireInfo={fireInfo}
+                        isSimulating={isSimulating}
+                    />
+                </div>
             </div>
         </div>
     );

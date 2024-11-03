@@ -5,24 +5,31 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Montserrat', 'sans-serif'],
+      },
       colors: {
         primary: {
-          DEFAULT: '#2c3882',
-          dim: '#222B67FF',
+          DEFAULT: '#262626',
+          dim: '000000',
         },
         text: {
-          DEFAULT: '#fceae3',
-          secondary: '#c4b2ab',
-          tertiary: '#9A8A84FF',
+          DEFAULT: '#FFFFFF',
+          secondary: '#a0a0a0',
+          tertiary: '#808080',
         },
-        accent: '#FFB029',
+        accent:{
+          'yellow': '#FFB029',
+          'yellow-dim': '#AE781AFF',
+          'red': '#ff3744',
+          'red-dim': '#b72831',
+        },
         background: {
-          DEFAULT: '#2f66c4',
+          DEFAULT: '#181818',
         },
-
-        boxShadow: {
-          'primary': '0 16px 24px rgba(74, 144, 226, 0.5)',
-        },
+      },
+      boxShadow: {
+        glow: '0 0 8px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.4), 0 0 20px rgba(255, 255, 255, 0.3)',
       },
       keyframes: {
         scroll: {
@@ -40,12 +47,10 @@ module.exports = {
           },
         },
       },
-      
       animation: {
         scroll: 'scroll 45s linear infinite',
         expand: 'expand 0.6s forwards ease-in-out',
       },
-
     },
   },
   plugins: [],
