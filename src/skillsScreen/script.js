@@ -10,13 +10,15 @@ const scrollInfo = {
   time: 2000,
 }
 
+export function isAnimationRunning(){return scrollInfo.isRunning;}
+
 //Initializes all basic info
 //selects the scroll location upon loading
 export default function Initialize(){
   console.log("js works");
   initializeSliding();
   // initializeTimeline();
-  initializeNavs();
+  // initializeNavs();
   initializeScroll();
   // initializeContentSizing();
 }
@@ -163,7 +165,7 @@ function initializeSliding(){
 //parameter: Takes in a function that calculates the new slide to transition to, with the current location as a parameter
 //Prevents multiple "switchSlide" functions from being called on top of each other in order to prevent animation bugs
 
-async function switchSlides(newScrollLocationFunction){
+export async function switchSlides(newScrollLocationFunction){
   if(scrollInfo.isRunning){return;}
   scrollInfo.isRunning = true;
   if(true){
