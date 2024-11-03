@@ -7,7 +7,7 @@ const scrollInfo = {
   loc: 0,
   isRunning: false,
   numSlides: 0,
-  time: 5000,
+  time: 2000,
 }
 
 //Initializes all basic info
