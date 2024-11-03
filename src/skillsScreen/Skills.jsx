@@ -4,6 +4,8 @@ import "./style.css";
 import prehistoric from "./prehistoric.jpg";
 import fireSafety from "./fireSafety.jpg";
 import chicagoFire from "./chicagoFire.jpg";
+import Location from "../Location/Location.jsx";
+import News from "../News/News.jsx";
 
 
 export default function Skills() {
@@ -48,7 +50,19 @@ export default function Skills() {
           </div>
         </div>
       </div>
-      
+      <div className="slide" data-num="Location">
+        <div className="slideContent">
+          <h1>Map Stuff</h1>
+          <Location/>
+        </div>
+      </div>
+      <div className="slide" data-num="Map">
+        <div className="slideContent">
+          <h1>News</h1>
+          <News/>
+        </div>
+      </div>
+
       <button type="button" id="moveLeftButton">Left</button>
       <button type="button" id="moveRightButton">Right</button>
       <div id="dropDownMenu">

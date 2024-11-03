@@ -15,13 +15,13 @@ const scrollInfo = {
 export default function Initialize(){
   console.log("js works");
   initializeSliding();
-  initializeTimeline();
+  // initializeTimeline();
   initializeNavs();
   initializeScroll();
 }
 
 function initializeScroll() {
-  const content = document.getElementById("historyContent");
+  const content = window.document.getElementById("historyContent");
   let lastScrollTop = content.scrollTop; // Start with the current scroll position
 
   content.addEventListener("scroll", () => {
@@ -149,7 +149,7 @@ async function switchSlides(newScrollLocationFunction){
   scrollInfo.isRunning = true;
   if(true){
     changeNavigationElementVisibility(true);
-    await Promise.all([runSlideAnimation(newScrollLocationFunction(scrollInfo.loc)), runTimelineTransition()]);
+    await Promise.all([runSlideAnimation(newScrollLocationFunction(scrollInfo.loc))]);
   }else{
     scrollInfo.loc = newScrollLocationFunction(scrollInfo.loc);
     window.document.getElementById("historyContent").style.setProperty("--scrollLocation", `${scrollInfo.loc}`);
