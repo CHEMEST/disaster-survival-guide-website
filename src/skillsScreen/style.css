@@ -214,18 +214,18 @@
   overflow: hidden;
 }
 
-.slideContent > div{
+.slideContent > .nativeContent{
   position: relative;
   display: flex;
   width: 100%;
   max-height: 90%;
 }
 
-.slideContent > div > img {
-  height: 100%;
+.slideContent > .nativeContent > img {
+  height: 70%;
 }
 
-.slideContent > div > p{
+.slideContent > .nativeContent > p{
   padding: 10px;
   
   @apply text-text-secondary;
