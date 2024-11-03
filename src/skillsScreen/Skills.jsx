@@ -50,18 +50,19 @@ export default function Skills() {
           </div>
         </div>
       </div>
+      <div className="slide" data-num="Map">
+        <div className="slideContent">
+          <h1>News</h1>
+          <div><News/></div>
+        </div>
+      </div>
       <div className="slide" data-num="Location">
         <div className="slideContent">
           <h1>Map Stuff</h1>
           <Location/>
         </div>
       </div>
-      <div className="slide" data-num="Map">
-        <div className="slideContent">
-          <h1>News</h1>
-          <News/>
-        </div>
-      </div>
+      
 
       <button type="button" id="moveLeftButton">Left</button>
       <button type="button" id="moveRightButton">Right</button>
