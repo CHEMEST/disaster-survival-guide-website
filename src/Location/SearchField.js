@@ -44,8 +44,8 @@ const SearchField = ({ onSearch, onFireInfoChange, onSimulationToggle }) => {
     return (
         <div className="space-y-6 max-w-md mx-auto">
             {/* Main Search Form */}
-            <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-4">
-                <div className="text-lg font-semibold text-gray-700">
+            <form onSubmit={handleSubmit} className="bg-primary shadow-md rounded-lg p-6 space-y-4">
+                <div className="text-lg font-semibold text-text">
                     Find nearby{' '}
                     <span className={`inline-block ${animate ? 'animate-pulse' : ''}`}>
                         <select
@@ -79,11 +79,11 @@ const SearchField = ({ onSearch, onFireInfoChange, onSimulationToggle }) => {
             </form>
 
             {/* Separate Container for "Enable adding fires" and Wind Speed */}
-            <div className="bg-white shadow-md rounded-lg p-4 space-y-4">
-                <div className="text-lg font-semibold text-gray-700">
+            <div className="bg-primary shadow-md rounded-lg p-4 space-y-4">
+                <div className="text-lg font-semibold text-text">
                     Simulate fires
                 </div>
-                <label className="flex items-center space-x-2 text-gray-700 text-sm">
+                <label className="flex items-center space-x-2 text-text-secondary text-sm">
                     <input
                         type="checkbox"
                         checked={fireInfo.canAddFires}
