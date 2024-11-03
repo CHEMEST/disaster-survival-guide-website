@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Montserrat', 'sans-serif'],
+      },
       colors: {
         primary: {
           DEFAULT: '#262626',
@@ -18,16 +21,15 @@ module.exports = {
         accent:{
           'yellow': '#FFB029',
           'yellow-dim': '#AE781AFF',
-          'red': '#f04f4f',
-          'red-dim': '#A43535FF',
+          'red': '#ff3744',
+          'red-dim': '#b72831',
         },
         background: {
           DEFAULT: '#181818',
         },
-
-        boxShadow: {
-          'primary': '0 16px 24px rgba(256, 256, 256, 1)',
-        },
+      },
+      boxShadow: {
+        glow: '0 0 8px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.4), 0 0 20px rgba(255, 255, 255, 0.3)',
       },
       keyframes: {
         scroll: {
@@ -45,12 +47,10 @@ module.exports = {
           },
         },
       },
-      
       animation: {
         scroll: 'scroll 45s linear infinite',
         expand: 'expand 0.6s forwards ease-in-out',
       },
-
     },
   },
   plugins: [],
