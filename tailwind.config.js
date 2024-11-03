@@ -7,20 +7,18 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#8291f1',
-        },
-        secondary: {
-          DEFAULT: '#95116f',
-          dark: '620848',
+          DEFAULT: '#2c3882',
+          dim: '000000',
         },
         text: {
-          DEFAULT: '#d6dcfa',
-          secondary: '#aeb3d1',
-          tertiary: '#8a8fa9',
-          dark: '050b29',
+          DEFAULT: '#fceae3',
+          secondary: '#c4b2ab',
+          tertiary: '#9A8A84FF',
         },
-        accent: '#e93d57',
-        background: '#02030e',
+        accent: '#FFB029',
+        background: {
+          DEFAULT: '#2f66c4',
+        },
 
         boxShadow: {
           'primary': '0 16px 24px rgba(74, 144, 226, 0.5)',

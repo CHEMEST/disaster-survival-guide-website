@@ -5,7 +5,7 @@ import ArticleCard from './ArticleCard';
 const ArticlesList = ({ articles }) => {
   //in case there are no articles
   if (!articles || articles.length === 0) {
-    return <p className="text-center text-secondary">No articles available.</p>;
+    return <p className="text-center text-text-secondary">No articles available.</p>;
   }
 
   return (

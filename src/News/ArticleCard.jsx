@@ -14,7 +14,7 @@ const ArticleCard = ({ title, description, url, urlToImage, author, publishedAt 
   return (
     <div
       onClick={handleClick}
-      className={`relative bg-secondary rounded-xl shadow-md overflow-hidden transition-transform duration-300 ease-in-out border border-secondary cursor-pointer ${
+      className={`relative bg-primary rounded-xl shadow-md overflow-hidden transition-transform duration-300 ease-in-out border border-accent cursor-pointer ${
         isAnimating ? 'animate-expand' : 'hover:shadow-primary'
       }`}
     >
