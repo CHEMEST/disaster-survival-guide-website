@@ -7,21 +7,26 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#2c3882',
+          DEFAULT: '#262626',
           dim: '000000',
         },
         text: {
-          DEFAULT: '#fceae3',
-          secondary: '#c4b2ab',
-          tertiary: '#9A8A84FF',
+          DEFAULT: '#FFFFFF',
+          secondary: '#a0a0a0',
+          tertiary: '#808080',
         },
-        accent: '#FFB029',
+        accent:{
+          'yellow': '#FFB029',
+          'yellow-dim': '#AE781AFF',
+          'red': '#f04f4f',
+          'red-dim': '#A43535FF',
+        },
         background: {
-          DEFAULT: '#2f66c4',
+          DEFAULT: '#181818',
         },
 
         boxShadow: {
-          'primary': '0 16px 24px rgba(74, 144, 226, 0.5)',
+          'primary': '0 16px 24px rgba(256, 256, 256, 1)',
         },
       },
       keyframes: {
