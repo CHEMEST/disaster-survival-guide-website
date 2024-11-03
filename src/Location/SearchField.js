@@ -80,6 +80,9 @@ const SearchField = ({ onSearch, onFireInfoChange, onSimulationToggle }) => {
 
             {/* Separate Container for "Enable adding fires" and Wind Speed */}
             <div className="bg-white shadow-md rounded-lg p-4 space-y-4">
+                <div className="text-lg font-semibold text-gray-700">
+                    Simulate fires
+                </div>
                 <label className="flex items-center space-x-2 text-gray-700 text-sm">
                     <input
                         type="checkbox"

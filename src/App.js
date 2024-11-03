@@ -6,14 +6,19 @@ import Location from './Location/Location.jsx';
 import Skills from './skillsScreen/Skills.jsx';
 
 function App() {
-  const [activeId, setActiveId] = useState(1); // Home is initially active
+  const [activeId, setActiveId] = useState(1);
 
   return (
-    <div>
-      <TopNavbar activeId={activeId} setActiveId={setActiveId}/>
-      <Skills />
-      <Location />
-      <News />
+    <div className="flex flex-col h-screen">
+      {/* Navbar */}
+      <TopNavbar activeId={activeId} setActiveId={setActiveId} />
+
+      {/* Main Content */}
+      <div className="flex-grow overflow-auto">
+        <Skills />
+        <Location />
+        <News />
+      </div>
     </div>
   );
 }

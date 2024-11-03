@@ -29,7 +29,7 @@ function Location() {
     };
 
     return (
-        <div className="flex h-screen">
+        <div className="flex h-full w-full">
             <div className="w-1/4 p-4 bg-gray-100">
                 <SearchField
                     onSearch={handleSearch}
