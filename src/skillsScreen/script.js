@@ -17,7 +17,30 @@ export default function Initialize(){
   initializeSliding();
   initializeTimeline();
   initializeNavs();
+  initializeScroll();
 }
+
+function initializeScroll() {
+  const content = document.getElementById("historyContent");
+  let lastScrollTop = content.scrollTop; // Start with the current scroll position
+
+  content.addEventListener("scroll", () => {
+    const scrollTop = content.scrollTop; // Get the current vertical scroll position
+
+    if (scrollTop > lastScrollTop && scrollInfo.loc < scrollInfo.numSlides - 1) {
+      // Detect downward scroll and trigger slide change
+      switchSlides(current => current + 1);
+    } else if (scrollTop < lastScrollTop && scrollInfo.loc > 0) {
+      // Detect upward scroll and trigger slide change
+      switchSlides(current => current - 1);
+    }
+
+    lastScrollTop = scrollTop; // Update last scroll position
+  });
+}
+
+
+
 
 //Adds children to the timeline, and assigns the correct offset 
 function initializeTimeline(){
