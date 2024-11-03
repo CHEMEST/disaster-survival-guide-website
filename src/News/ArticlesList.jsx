@@ -1,25 +1,33 @@
-// ArticlesList.js
-import React from 'react';
 import ArticleCard from './ArticleCard';
 
 const ArticlesList = ({ articles }) => {
-  //in case there are no articles
   if (!articles || articles.length === 0) {
     return <p className="text-center text-text-secondary">No articles available.</p>;
   }
 
+  const handleScroll = (e) => {
+    e.currentTarget.scrollLeft += e.deltaY;
+    e.stopPropagation();
+    e.preventDefault();
+  };
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div
+      onWheel={handleScroll}
+      className="flex overflow-x-auto space-x-4 py-4 px-2 no-scrollbar"
+    >
       {articles.map((article, index) => (
-        <ArticleCard
-          key={index}
-          title={article.title}
-          description={article.description}
-          url={article.url}
-          urlToImage={article.urlToImage}
-          author={article.author}
-          publishedAt={article.publishedAt}
-        />
+        <div className="flex-none w-80">
+          <ArticleCard
+            key={index}
+            title={article.title}
+            description={article.description}
+            url={article.url}
+            urlToImage={article.urlToImage}
+            author={article.author}
+            publishedAt={article.publishedAt}
+          />
+        </div>
       ))}
     </div>
   );
