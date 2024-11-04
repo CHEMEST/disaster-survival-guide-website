@@ -20,26 +20,34 @@ export default function Initialize(){
   // initializeTimeline();
   // initializeNavs();
   initializeScroll();
-  // initializeContentSizing();
+  initializeContentSizing();
 }
 
 function initializeContentSizing(){
   const parent = window.document.getElementById("historyContent");
   const update = function(){
-    const nav = window.document.getElementById("navbar");
-    console.log(nav.getBoundingClientRect());
-    parent.style.height = `calc(100vh - ${nav.getBoundingClientRect().height}px)`;
+    // const nav = window.document.getElementById("navbar");
+    window.document.querySelector(":root").style.setProperty("--screenHeight", `${window.innerHeight - parent.getBoundingClientRect().top}px`);
   }
   update();
   window.onresize = update;
 }
 
 function initializeScroll() {
+
+  // const children = window.document.querySelectorAll("#historyContent .slideContent");
+  // children.forEach(function(child){
+  //   child.style.border = "2px solid red";
+  //   child.addEventListener("scroll", function(){
+  //     console.log("help me again ples");
+  //   });
+  // });
+
   const content = window.document.getElementById("historyContent");
   let lastScrollTop = content.scrollTop; // Start with the current scroll position
-
+  console.log("help me");
   content.addEventListener("scroll", () => {
-
+    console.log("scrolled");
     const scrollTop = content.scrollTop; // Get the current vertical scroll position
     if(scrollInfo.isRunning){
       lastScrollTop = scrollTop; // Update last scroll position
@@ -99,7 +107,6 @@ function initializeSideButtons(){
     switchSlides((current)=>{return current+1});
   });
   leftButton.addEventListener("animationDone", function(){
-    console.log(scrollInfo.loc + "," + scrollInfo.numSlides);
     leftButton.style.opacity = "1";
     if(scrollInfo.loc === 0){
        leftButton.classList.add("hideNav");
@@ -167,6 +174,7 @@ function initializeSliding(){
 
 export async function switchSlides(newScrollLocationFunction){
   if(scrollInfo.isRunning){return;}
+  if(newScrollLocationFunction(scrollInfo.loc) === scrollInfo.loc){return;}
   scrollInfo.isRunning = true;
   if(true){
     changeNavigationElementVisibility(true);
@@ -175,7 +183,6 @@ export async function switchSlides(newScrollLocationFunction){
     scrollInfo.loc = newScrollLocationFunction(scrollInfo.loc);
     window.document.getElementById("historyContent").style.setProperty("--scrollLocation", `${scrollInfo.loc}`);
   }
-  console.log("finished");
   scrollInfo.isRunning = false;
   changeNavigationElementVisibility(false);
 }
