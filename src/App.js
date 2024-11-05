@@ -24,7 +24,7 @@ function App() {
         </div>
 
       {/* Main Content */}
-      <div className="flex-grow overflow-hidden pt-16">
+      <div className="flex-grow overflow-hidden">
 
         <Skills setActiveId={setActiveId}/>
         {/* <Location />
