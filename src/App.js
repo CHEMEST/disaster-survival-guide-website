@@ -16,17 +16,17 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen overflow-hidden">
       {/* Navbar */}
       
-      
-
-      {/* Main Content */}
-      <div className="flex-grow overflow-auto">
-        <div id="navbar">
+      <div id="navbar">
           <TopNavbar activeId={activeId} setActiveId={setActiveId} switchSlides={switchSlides} />
         </div>
-        <Skills />
+
+      {/* Main Content */}
+      <div className="flex-grow overflow-hidden pt-16">
+
+        <Skills setActiveId={setActiveId}/>
         {/* <Location />
         <News /> */}
       </div>

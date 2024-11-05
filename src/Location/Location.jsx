@@ -3,33 +3,30 @@ import OverpassMap from './OverpassMap';
 import SearchField from './SearchField';
 
 function Location() {
-    const [featureType, setFeatureType] = useState(["amenity", "fire_station"]); // Default feature type
-    const [radius, setRadius] = useState(''); // Default radius
-    const [fireInfo, setFireInfo] = useState({ canAddFires: false, windSpeed: '' }); // Fire info dictionary
-    const [isSimulating, setIsSimulating] = useState(false); // Simulation state
+    const [featureType, setFeatureType] = useState(["amenity", "fire_station"]);
+    const [radius, setRadius] = useState('');
+    const [fireInfo, setFireInfo] = useState({ canAddFires: false, windSpeed: '' });
+    const [isSimulating, setIsSimulating] = useState(false);
 
     const handleSearch = ({ inputValue, parameter, radius }) => {
         if (typeof parameter === 'object') {
             setFeatureType(parameter);
         } else {
-            setFeatureType(JSON.parse(parameter)); // Update the feature type state
+            setFeatureType(JSON.parse(parameter));
         }
-
         setRadius(radius);
     };
 
-    // Handler to update fire information
     const handleFireInfoChange = (info) => {
         setFireInfo(info);
     };
 
-    // Handler to toggle simulation
     const handleSimulationToggle = (isSimulating) => {
         setIsSimulating(isSimulating);
     };
 
     return (
-        <div className="flex h-full w-full">
+        <div className="flex flex-grow w-full overflow-hidden">
             <div className="w-1/4 p-4 bg-background">
                 <SearchField
                     onSearch={handleSearch}
@@ -37,8 +34,9 @@ function Location() {
                     onSimulationToggle={handleSimulationToggle}
                 />
             </div>
-            <div className="w-3/4 p-4 flex justify-center items-center bg-background"> {/* Center the map */}
-                <div className="bg-background rounded-lg w-full h-full">
+            {/* Restrict the height and center the map container */}
+            <div className="w-3/4 flex justify-center items-center max-h-[70vh]  bg-background">
+                <div className="bg-background rounded-lg w-3/4 h-full flex justify-center items-center p-4">
                     <OverpassMap
                         featureType={featureType}
                         radius={radius}

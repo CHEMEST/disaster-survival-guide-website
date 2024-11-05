@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Initialize from "./script.js";
 import "./style.css";
 import prehistoric from "./prehistoric.jpg";
@@ -7,17 +7,20 @@ import chicagoFire from "./chicagoFire.jpg";
 import Location from "../Location/Location.jsx";
 import News from "../News/News.jsx";
 
+export default function Skills({ setActiveId }) {
+  useEffect(() => {
+    Initialize(setActiveId); // Pass setActiveId to Initialize here
+  }, [setActiveId]);
 
-export default function Skills() {
   return (
-    <div id="historyContent" onLoad={Initialize}>
+    <div id="historyContent" className="pt-16 overflow-hidden" onLoad={Initialize}>
       <div id="timeline">
       </div>
       {/* Slide 1 */}
-      <div className="slide" data-num="Discovery of Fire">
-        <div className="slideContent flex flex-col items-center text-center">
+      <div className="slide min-h-screen flex flex-col justify-center items-center" data-num="Discovery of Fire">
+        <div className="slideContent flex flex-col items-center text-center w-full h-full">
           <h1 className="text-2xl font-bold mb-4">Discovery of Fire</h1>
-          <div className="nativeContent flex flex-col items-center mt-4 max-w-md mx-auto">
+          <div className="nativeContent flex flex-col items-center max-w-md mx-auto">
             <img src={prehistoric} alt="prehistoricFire" className="w-full max-w-md rounded-xl mb-4"/>
             <p className="text-lg">
               Fire was discovered 125k years ago.
@@ -28,10 +31,10 @@ export default function Skills() {
         </div>
       </div>
       {/* Slide 2 */}
-      <div className="slide" data-num="Fire's Destruction">
-        <div className="slideContent flex flex-col items-center text-center">
+      <div className="slide min-h-screen flex flex-col justify-center items-center" data-num="Fire's Destruction">
+        <div className="slideContent flex flex-col items-center text-center w-full h-full">
           <h1 className="text-2xl font-bold mb-4">Discovery of Fire</h1>
-          <div className="nativeContent flex flex-col items-center mt-4 max-w-md mx-auto">
+          <div className="nativeContent flex flex-col items-center max-w-md mx-auto">
             <img src={chicagoFire} alt="chicagoFire" className="w-full max-w-md rounded-xl mb-4"/>
             <p className="text-xl text-text">
               Fire has caused much damage to cities and urban sprawl, destroying many buildings and killing many.
@@ -41,10 +44,10 @@ export default function Skills() {
         </div>
       </div>
       {/* Slide 3 */}
-      <div className="slide" data-num="Fire's Destruction">
-        <div className="slideContent flex flex-col items-center text-center">
+      <div className="slide min-h-screen flex flex-col justify-center items-center" data-num="Fire's Destruction">
+        <div className="slideContent flex flex-col items-center text-center w-full h-full">
           <h1 className="text-2xl font-bold mb-4">Discovery of Fire</h1>
-          <div className="nativeContent flex flex-col items-center mt-4 max-w-md mx-auto">
+          <div className="nativeContent flex flex-col items-center max-w-md mx-auto">
             <img src={fireSafety} alt="fireSaftyEquipment" className="w-full max-w-md rounded-lg mb-4"/>
             <p className="text-xl text-text">
               However, thanks to the creation of new inventions, such as fire escapes, fire hydrants, fire engines, and more, fires are prevented before they occur!
@@ -54,20 +57,18 @@ export default function Skills() {
         </div>
       </div>
 
-      <div className="slide" data-num="Location">
-        <div className="slideContent">
-          <h1>Map Stuff</h1>
+      <div className="slide min-h-screen flex flex-col justify-center items-center" data-num="Location">
+        <div className="slideContent w-full h-full flex justify-center items-center">
+          <h1>Map</h1>
           <Location/>
         </div>
       </div>
 
-      <div className="slide" data-num="Map">
-        <div className="slideContent">
-          <div><News/></div>
+      <div className="slide min-h-screen flex flex-col justify-center items-center" data-num="Map">
+        <div className="slideContent w-full h-full flex justify-center items-center">
+          <News/>
         </div>
       </div>
-      
-      
 
       <button type="button" id="moveLeftButton">Left</button>
       <button type="button" id="moveRightButton">Right</button>

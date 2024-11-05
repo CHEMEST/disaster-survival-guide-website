@@ -115,8 +115,8 @@ const OverpassMap = ({ featureType, radius, fireInfo, isSimulating }) => {
         return () => clearInterval(interval);
     }, [fireInfo.windSpeed, isSimulating]);
 
-    if (loading) return <div>Loading...</div>;
-    if (locLat === null || locLong === null) return <div>Locating...</div>;
+    if (loading) return <div className='text-text'>Loading...</div>;
+    if (locLat === null || locLong === null) return <div className='text-text'>Locating...</div>;
 
     return (
         <MapContainer
