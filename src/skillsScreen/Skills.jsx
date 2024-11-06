@@ -7,13 +7,46 @@ import chicagoFire from "./chicagoFire.jpg";
 import Location from "../Location/Location.jsx";
 import News from "../News/News.jsx";
 
+const FloatingDots = () => {
+  const numDots = 50; // Adjust the number of dots
+  const dotsArray = Array.from({ length: numDots });
+
+  return (
+      <div className=" w-full h-full overflow-hidden -z-40">
+          {dotsArray.map((_, index) => {
+              const size = Math.floor(Math.random() * 4) + 2; // Random size for the dots
+              const top = (Math.random() * 100); // Random top position
+              const left = Math.random() * 100; // Random left position
+              const delay = Math.random() * 10; // Random animation delay
+
+              return (
+                  <div
+                      key={index}
+                      className="absolute bg-white rounded-full opacity-75"
+                      style={{
+                          width: `${size}px`,
+                          height: `${size}px`,
+                          top: `${top}%`,
+                          left: `${left}%`,
+                          animation: `float ${5 + Math.random() * 5}s ease-in-out infinite`,
+                          animationDelay: `${delay}s`,
+                      }}
+                  ></div>
+              );
+          })}
+      </div>
+  );
+};
+
 export default function Skills({ setActiveId }) {
   useEffect(() => {
     Initialize(setActiveId); // Pass setActiveId to Initialize here
   }, [setActiveId]);
 
   return (
-    <div id="historyContent" className="pt-16 overflow-hidden" onLoad={Initialize}>
+    <div id="historyContent" className="bg-background pt-16 overflow-hidden" onLoad={Initialize}>
+      <div>
+      <FloatingDots/>
       <div id="timeline">
       </div>
       {/* Slide 1 */}
@@ -76,6 +109,7 @@ export default function Skills({ setActiveId }) {
         <h3 id="dropDownMenuTitle">Menu</h3>
         <div id="dropDownMenuContent">
         </div>
+      </div>
       </div>
     </div>
   );
