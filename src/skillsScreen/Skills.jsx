@@ -52,7 +52,7 @@ export default function Skills({ setActiveId }) {
       {/* Slide 1 */}
       <div className="slide min-h-screen flex flex-col justify-center items-center" data-num="Discovery of Fire">
         <div className="slideContent flex flex-col items-center text-center w-full h-full">
-          <h1 className="text-2xl font-bold mb-4">Discovery of Fire</h1>
+          <h1 className="text-2xl font-bold mb-4">The Origins of Fire Safety</h1>
           <div className="nativeContent flex flex-col items-center max-w-md mx-auto">
             <img src={prehistoric} alt="prehistoricFire" className="w-full max-w-md rounded-xl mb-4"/>
             <p className="text-lg">
@@ -66,7 +66,7 @@ export default function Skills({ setActiveId }) {
       {/* Slide 2 */}
       <div className="slide min-h-screen flex flex-col justify-center items-center" data-num="Fire's Destruction">
         <div className="slideContent flex flex-col items-center text-center w-full h-full">
-          <h1 className="text-2xl font-bold mb-4">Discovery of Fire</h1>
+          <h1 className="text-2xl font-bold mb-4">Destruction</h1>
           <div className="nativeContent flex flex-col items-center max-w-md mx-auto">
             <img src={chicagoFire} alt="chicagoFire" className="w-full max-w-md rounded-xl mb-4"/>
             <p className="text-xl text-text">
@@ -79,7 +79,7 @@ export default function Skills({ setActiveId }) {
       {/* Slide 3 */}
       <div className="slide min-h-screen flex flex-col justify-center items-center" data-num="Fire's Destruction">
         <div className="slideContent flex flex-col items-center text-center w-full h-full">
-          <h1 className="text-2xl font-bold mb-4">Discovery of Fire</h1>
+          <h1 className="text-2xl font-bold mb-4">Fire Safety Today and Beyond</h1>
           <div className="nativeContent flex flex-col items-center max-w-md mx-auto">
             <img src={fireSafety} alt="fireSaftyEquipment" className="w-full max-w-md rounded-lg mb-4"/>
             <p className="text-xl text-text">

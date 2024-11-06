@@ -2,8 +2,8 @@ import { Disclosure, DisclosureButton } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const navigationItems = [
-  { name: 'Discovery', to: '#discovery', id: 0 },
-  { name: 'Destruction', to: '#distruction', id: 1 },
+  { name: 'Early Fires', to: '#earlyFires', id: 0 },
+  { name: 'Revolution', to: '#revolution', id: 1 },
   { name: 'Modern', to: '#modern', id: 2 },
   { name: 'Map', to: '#map', id: 3 },
   { name: 'News', to: '#news', id: 4 },
