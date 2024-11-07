@@ -10,6 +10,11 @@ const scrollInfo = {
   time: 2000,
 }
 
+const mouseInfo = {
+  x: 0,
+  y: 0,
+}
+
 export function isAnimationRunning(){return scrollInfo.isRunning;}
 
 //Initializes all basic info
@@ -21,6 +26,16 @@ export default function Initialize(){
   // initializeNavs();
   initializeScroll();
   initializeContentSizing();
+  initializeMouse();
+}
+
+function initializeMouse(){
+  const parent = window.document.getElementById("historyContent");
+  parent.addEventListener("mousemove", function(e){
+    mouseInfo.x = e.clientX;
+    mouseInfo.y = e.clientY;
+    // console.log(mouseInfo);
+  });
 }
 
 function initializeContentSizing(){
@@ -37,6 +52,25 @@ function initializeScroll() {
   console.log("initialized");
 
   const parent = window.document.getElementById("historyContent");
+
+  // parent.addEventListener("scroll", function(event){
+  //   const checkFor = ["list"];
+  //   checkFor.map(function(entry){return window.document.getElementById(entry);}).forEach(function(entry){
+  //     const rect = entry.getBoundingClientRect();
+  //     if(mouseInfo.x > rect.left && mouseInfo.x < rect.right && mouseInfo.y > rect.top && mouseInfo.y < rect.bottom){
+  //       parent.style.overflow = "hidden";
+  //       // parent.stopScroll();
+  //       window.document.getElementById("news").scrollIntoView();
+  //       console.log(rect);
+  //       console.log(mouseInfo);
+  //       return;
+  //     }else{
+  //       parent.style.overflow = "scroll";
+  //       console.log("going");
+  //     }
+  //   });
+  // });
+
   const children = window.document.querySelectorAll("#historyContent .slide");
   const observer = new IntersectionObserver(function(entries){
     // console.log(entries);
@@ -54,6 +88,7 @@ function initializeScroll() {
       for(let i = 0; i < children.length; i++){
         if(children[i] === entry){
           scrollInfo.loc = i;
+          console.log(scrollInfo.loc);
         }
       }
       
@@ -61,7 +96,7 @@ function initializeScroll() {
     });
   }, {
     root: parent,
-    threshold: 0.5,
+    threshold: 0.4,
   });
   children.forEach(function(entry){observer.observe(entry);});
 
@@ -204,7 +239,7 @@ function initializeSliding(){
 
 export async function switchSlides(newScrollLocationFunction){
   
-  if(scrollInfo.isRunning){return;}
+  if(scrollInfo.isRunning){return false;}
   const newLoc = newScrollLocationFunction(scrollInfo.loc);
   const parent = window.document.getElementById("historyContent");
   // parent.style.overflow = "hidden";
@@ -244,6 +279,7 @@ export async function switchSlides(newScrollLocationFunction){
   // parent.overflow = "scroll";
   scrollInfo.loc = newLoc;
   // changeNavigationElementVisibility(false);
+  return true;
 }
 
 //changes the nav elements based on the initial parameter

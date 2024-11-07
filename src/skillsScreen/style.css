@@ -257,3 +257,27 @@
 
   @apply text-text text-5xl font-bold text-center mb-10 text-text font-bold mb-4;
 }
+
+#titleSlide{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#titleSlide > button{
+  /* border-image: conic-gradient(red, orange, yellow, red); */
+  /* border-radius: 5px;
+  border-width: 5px;
+  border-style: solid; */
+
+  background-color: white;
+}
+
+#titleSlide > button::before{
+  content: "";
+  width: 100px;
+  height: 100px;
+  background: conic-gradient(red, orange, yellow, red);
+  z-index: 10;
+}

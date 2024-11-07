@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Initialize from "./script.js";
+import Initialize, {switchSlides} from "./script.js";
 import "./style.css";
 import prehistoric from "./prehistoric.jpg";
 import fireSafety from "./fireSafety.jpg";
@@ -45,6 +45,13 @@ export default function Skills({ setActiveId }) {
 
   return (
     <div id="historyContent" onLoad={Initialize}>
+      <div className="slide" data-num="Title">
+        <div id="titleSlide" className="slideContent">
+          <h1>BlazeHub!!!</h1>
+          <button onClick={()=>{switchSlides(()=>{return 1;})}}>Go To Next</button>
+        </div>
+      </div>
+
       {/* <div id="scrollingSection"> */}
       {/* <FloatingDots/> */}
       {/* <div id="timeline">
@@ -97,9 +104,16 @@ export default function Skills({ setActiveId }) {
         </div>
       </div>
 
-      <div className="slide" data-num="Map">
-        <div className="slideContent">
+      <div className="slide" data-num="News">
+        <div id="news" className="slideContent">
           <News/>
+        </div>
+      </div>
+
+      <div className="slide" data-num="About Us">
+        <div className="slideContent">
+          <h1>About Us</h1>
+          
         </div>
       </div>
 
