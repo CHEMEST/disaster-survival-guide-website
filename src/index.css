@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Fade out effect */
+/* Default hidden state */
+.nav-item-background {
+    background-color: transparent;
+    transition: background-color 0.5s ease;
+  }
+  
+  /* Appear background on click */
+  .nav-item-active {
+    background-color: rgba(31, 41, 55, 1); /* Active background color */
+  }
+  
+  /* Fade-out effect */
+  .fade-out {
+    background-color: transparent;
+    transition: background-color 0.5s ease;
+  }
+  
+  /* Define the keyframes for the fade-out animation */
+  @keyframes fadeOut {
+    from {
+      background-color: rgba(31, 41, 55, 1); /* Original active background color */
+    }
+    to {
+      background-color: rgba(31, 41, 55, 0); /* Fully transparent */
+    }
+  }
+  

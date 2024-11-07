@@ -44,12 +44,27 @@ export default function Skills({ setActiveId }) {
   }, [setActiveId]);
 
   return (
-    <div id="historyContent" onLoad={Initialize}>
+    <div id="historyContent" className = "" onLoad={Initialize}>
       <div className="slide" data-num="Title">
-        <div id="titleSlide" className="slideContent">
-          <h1>BlazeHub!!!</h1>
-          <button onClick={()=>{switchSlides(()=>{return 1;})}}>Go To Next</button>
-        </div>
+      <div id="titleSlide" className="flex flex-col items-center justify-center min-h-screen w-full text-white text-center p-8">
+      <img
+        src="/fireLogo.png"
+        alt="BlazeHub Logo"
+        className="w-24 h-24 mb-4"
+      />
+      <h1 className="text-9xl bg-gradient-to-b from-accent to-orange-600 text-text font-extrabold mb-8 bg-clip-text text-transparent tracking-widest uppercase drop-shadow-xl">
+        BlazeHub
+      </h1>
+      <p className="text-lg text-text max-w-lg mb-12">
+        Your ultimate resource for the latest in fire safety news and tips.
+      </p>
+      <button
+        onClick={() => switchSlides(() => 1)}
+        className="px-8 py-4 bg-white text-accent-dim text-xl font-semibold rounded-full shadow-lg hover:bg-red-600 hover:text-accent transition duration-300 hover:shadow-glow hover:scale-105"
+      >
+        Next
+      </button>
+    </div>
       </div>
 
       {/* <div id="scrollingSection"> */}
@@ -110,12 +125,32 @@ export default function Skills({ setActiveId }) {
         </div>
       </div>
 
-      <div className="slide" data-num="About Us">
-        <div className="slideContent">
-          <h1>About Us</h1>
-          
+            <div className="slide w-full" data-num="About Us">
+        <div className="slideContent flex flex-col items-center justify-center min-h-screen bg-background text-text p-8">
+          <h1 className="text-5xl font-bold mb-6 text-center text-text">About Us</h1>
+          <p className="text-lg max-w-2xl text-center mb-8 text-text-secondary">
+            BlazeHub is dedicated to providing up-to-date fire safety news, tips, and nearby resources to help keep you and your loved ones stay safe. Our mission is to empower communities with knowledge and tools to prevent, prepare for, and respond to fire-related emergencies.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-12">
+            <div className="w-full md:w-1/3 bg-primary rounded-lg shadow-lg p-6 hover:shadow-2xl transition duration-300">
+              <h2 className="text-2xl font-semibold mb-4 text-accent">Our Mission</h2>
+              <p className="text-sm text-text-tertiary">
+                At BlazeHub, we strive to raise awareness about fire safety through accessible and reliable information. We believe in making fire safety knowledge accessible to everyone, fostering a culture of preparedness.
+              </p>
+            </div>
+
+            <div className="w-full md:w-1/3 bg-primary rounded-lg shadow-lg p-6 hover:shadow-2xl transition duration-300">
+              <h2 className="text-2xl font-semibold mb-4 text-accent">Our Team</h2>
+              <p className="text-sm text-text-tertiary">
+                BlazeHub is powered by a dedicated team of writers and developers passionate about community well-being. Together, we aim to provide trusted and impactful resources for fire safety.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
+
+
 
       <button type="button" id="moveLeftButton">Left</button>
       <button type="button" id="moveRightButton">Right</button>
