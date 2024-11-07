@@ -24,7 +24,7 @@ export default function Initialize(){
   // initializeSliding();
   // initializeTimeline();
   // initializeNavs();
-  initializeScroll();
+  // initializeScroll();
   initializeContentSizing();
   initializeMouse();
 }

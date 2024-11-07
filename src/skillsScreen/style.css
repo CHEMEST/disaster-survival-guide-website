@@ -22,7 +22,7 @@
   overflow-y: scroll;
   width: 100%;
   height: var(--screenHeight);
-  border: 2px solid black;
+  /* border: 2px solid black; */
   position: relative;
   margin: 0;
   scroll-behavior: smooth;
@@ -50,7 +50,7 @@
   height: var(--screenHeight);
   
 
-  border: 2px solid white;
+  border-bottom: 2px solid white;
 
   /* top: calc((var(--offset) - var(--scrollLocation)) * 100%); */
 
