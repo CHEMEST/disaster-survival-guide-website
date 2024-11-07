@@ -7,8 +7,6 @@ const ArticlesList = ({ articles }) => {
 
   const handleScroll = (e) => {
     e.currentTarget.scrollLeft += e.deltaY;
-    e.stopPropagation();
-    e.preventDefault();
   };
 
   return (

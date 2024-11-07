@@ -40,6 +40,7 @@ export default function TopNavbar({ activeId, setActiveId, switchSlides }) {
                     onClick={(e) => {
                       e.preventDefault(); // Prevent default anchor behavior
                       setActiveId(item.id);
+                      console.log(item.id);
                       switchSlides(() => item.id); // Trigger slide animation
                     }}
                     className={classNames(
@@ -57,7 +58,7 @@ export default function TopNavbar({ activeId, setActiveId, switchSlides }) {
         </div>
       </div>
 
-      <Disclosure.Panel className="sm:hidden">
+      {/* <Disclosure.Panel className="sm:hidden">
         <div className="space-y-1 px-2 pb-3 pt-2">
           {navigationItems.map((item) => (
             <Disclosure.Button
@@ -79,7 +80,7 @@ export default function TopNavbar({ activeId, setActiveId, switchSlides }) {
             </Disclosure.Button>
           ))}
         </div>
-      </Disclosure.Panel>
+      </Disclosure.Panel> */}
     </Disclosure>
   );
 }

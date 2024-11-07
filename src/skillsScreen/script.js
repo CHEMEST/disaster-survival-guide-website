@@ -14,52 +14,73 @@ export function isAnimationRunning(){return scrollInfo.isRunning;}
 
 //Initializes all basic info
 //selects the scroll location upon loading
-export default function Initialize(setActiveId){
+export default function Initialize(){
   console.log("js works");
   initializeSliding();
   // initializeTimeline();
   // initializeNavs();
-  initializeScroll(setActiveId);
-  // initializeContentSizing();
+  initializeScroll();
+  initializeContentSizing();
 }
 
 function initializeContentSizing(){
   const parent = window.document.getElementById("historyContent");
   const update = function(){
-    const nav = window.document.getElementById("navbar");
-    console.log(nav.getBoundingClientRect());
-    parent.style.height = `calc(100vh - ${nav.getBoundingClientRect().height}px)`;
+    // const nav = window.document.getElementById("navbar");
+    window.document.querySelector(":root").style.setProperty("--screenHeight", `${window.innerHeight - parent.getBoundingClientRect().top}px`);
   }
   update();
   window.onresize = update;
 }
 
-function initializeScroll(setActiveId) {
-  const content = window.document.getElementById("historyContent");
-  let lastScrollTop = content.scrollTop;
+function initializeScroll() {
+  console.log("initialized");
 
-  content.addEventListener("scroll", () => {
-    const scrollTop = content.scrollTop;
-
-    if (scrollInfo.isRunning) {
-      lastScrollTop = scrollTop;
-      return;
-    }
-
-    if (scrollTop > lastScrollTop && scrollInfo.loc < scrollInfo.numSlides - 1) {
-      // Detect downward scroll and trigger slide change
-      switchSlides((loc) => loc + 1);
-      const newLoc = scrollInfo.loc + 1; // Update new location
-      setActiveId(newLoc); // Update activeId to the new location
-    } else if (scrollTop < lastScrollTop && scrollInfo.loc > 0) {
-      // Detect upward scroll and trigger slide change
-      switchSlides((loc) => loc - 1);
-      const newLoc = scrollInfo.loc - 1; // Update new location
-      setActiveId(newLoc); // Update activeId to the new location
-    }
-
-    lastScrollTop = scrollTop;
+  const parent = window.document.getElementById("historyContent");
+  const observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      console.log("ran");
+      if(!entry.isIntersecting || scrollInfo.isRunning){return;}
+      console.log("scrolling");
+      entry.target.scrollIntoView();
+    });
+  }, {
+    root: parent,
+    threshold: 0.5,
   });
+  window.document.querySelectorAll("#historyContent .slide").forEach(function(entry){observer.observe(entry);});
+
+  // const children = window.document.querySelectorAll("#historyContent .slideContent");
+  // children.forEach(function(child){
+  //   child.style.border = "2px solid red";
+  //   child.addEventListener("scroll", function(){
+  //     console.log("help me again ples");
+  //   });
+  // });
+
+  // const content = window.document.getElementById("historyContent");
+  // let lastScrollTop = content.scrollTop; // Start with the current scroll position
+  // console.log("help me");
+  // content.addEventListener("scroll", () => {
+  //   console.log("scrolled");
+  //   const scrollTop = content.scrollTop; // Get the current vertical scroll position
+  //   if(scrollInfo.isRunning){
+  //     lastScrollTop = scrollTop; // Update last scroll position
+  //     return;
+  //   }
+
+    
+
+  //   if (scrollTop > lastScrollTop && scrollInfo.loc < scrollInfo.numSlides - 1) {
+  //     // Detect downward scroll and trigger slide change
+  //     switchSlides(current => current + 1);
+  //   } else if (scrollTop < lastScrollTop && scrollInfo.loc > 0) {
+  //     // Detect upward scroll and trigger slide change
+  //     switchSlides(current => current - 1);
+  //   }
+
+  //   lastScrollTop = scrollTop; // Update last scroll position
+  // });
 }
 
 
@@ -101,7 +122,6 @@ function initializeSideButtons(){
     switchSlides((current)=>{return current+1});
   });
   leftButton.addEventListener("animationDone", function(){
-    console.log(scrollInfo.loc + "," + scrollInfo.numSlides);
     leftButton.style.opacity = "1";
     if(scrollInfo.loc === 0){
        leftButton.classList.add("hideNav");
@@ -169,15 +189,20 @@ function initializeSliding(){
 
 export async function switchSlides(newScrollLocationFunction){
   if(scrollInfo.isRunning){return;}
+  const newLoc = newScrollLocationFunction(scrollInfo.loc);
+  const parent = window.document.getElementById("historyContent");
+  if(newLoc === scrollInfo.loc || newLoc < 0 || newLoc >= scrollInfo.numSlides){return;}
   scrollInfo.isRunning = true;
+  
+    
+
   if(true){
     changeNavigationElementVisibility(true);
-    await Promise.all([runSlideAnimation(newScrollLocationFunction(scrollInfo.loc))]);
+    await Promise.all([runSlideAnimation(newLoc)]);
   }else{
-    scrollInfo.loc = newScrollLocationFunction(scrollInfo.loc);
+    scrollInfo.loc = newLoc;
     window.document.getElementById("historyContent").style.setProperty("--scrollLocation", `${scrollInfo.loc}`);
   }
-  console.log("finished");
   scrollInfo.isRunning = false;
   changeNavigationElementVisibility(false);
 }

@@ -1,3 +1,7 @@
+:root{
+  --screenHeight: 100px;
+}
+
 *{
   margin: 0;
 }
@@ -16,19 +20,20 @@
 
 #historyContent{
   overflow-y: scroll;
-  overflow-x: hidden;
-  scroll-snap-type: y mandatory;
-  height: 100vh;
   width: 100%;
+  height: var(--screenHeight);
   border: 2px solid black;
   position: relative;
   margin: 0;
+  scroll-behavior: smooth;
+
+
+  @apply bg-background
 }
 
-#historyContent::-webkit-scrollbar {
+/* #historyContent::-webkit-scrollbar {
   display: none;
-}
-
+} */
 
 @supports(overflow-y: -moz-scrollbars-none){
   #historyContent{
@@ -40,13 +45,19 @@
   --offset: 0;
   margin: 0;
   position: absolute;
-  border: 2px solid black;
+
   width: 100%;
   height: 100%;
-  transform: scale(var(--globalScale));
-  left: calc((var(--offset) - var(--scrollLocation)) * 100%);
+  
 
-  @apply bg-background;
+  border: 2px solid white;
+
+  top: calc((var(--offset) - var(--scrollLocation)) * 100%);
+
+  transform: scale(1);
+  
+
+  @apply bg-background min-h-screen flex flex-col justify-center items-center;
 }
 
 #timeline{
@@ -110,7 +121,7 @@
   background-color: rgb(255, 255, 255, 1);
   text-align: center;
   font-size: 20pt;
-  padding: 0px 0;
+  padding: 0;
 }
 
 #dropDownMenuContent{
@@ -202,46 +213,47 @@
 
 .slideContent{
   position: absolute;
+
+  overflow: hidden;
+
   width: 100%;
   height: 100%;
-  max-height: 100%;
-  max-width: 100%;
   top: calc(0);
   left: calc(0);
   padding: 10px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
+  @apply flex flex-col items-center text-center w-full h-full;
 }
 
 .slideContent > .nativeContent{
   position: relative;
   display: flex;
   width: 100%;
-  max-height: 90%;
+  height: 100%;
   align-items: vertical;
+
+  @apply flex flex-col items-center max-w-md mx-auto;
 }
 
 .slideContent > .nativeContent > img {
-  height: 70%;
+  height: 50%;
+  border-radius: 10px;
+
+  /* @apply: w-full max-w-md rounded-lg mb-4; */
 }
 
 .slideContent > .nativeContent > p{
   padding: 10px;
   
-  @apply text-text-secondary text-center;
+  @apply text-text-secondary text-center text-xl text-text;
 }
 
 .slideContent > h1{
   height: 10%;
   text-align: center;
 
-
-
-  @apply text-text text-5xl font-bold text-center mb-10 text-text;
-}
-
-.slide {
-  min-height: 100vh;
-  scroll-snap-align: start; /* Snaps each slide to start position on scroll */
+  @apply text-text text-5xl font-bold text-center mb-10 text-text font-bold mb-4;
 }
