@@ -44,11 +44,11 @@ export default function Skills({ setActiveId }) {
   }, [setActiveId]);
 
   return (
-    <div id="historyContent" className="bg-background pt-16 overflow-hidden" onLoad={Initialize}>
+    <div id="historyContent" onLoad={Initialize}>
       {/* <div id="scrollingSection"> */}
       {/* <FloatingDots/> */}
-      <div id="timeline">
-      </div>
+      {/* <div id="timeline">
+      </div> */}
       {/* Slide 1 */}
       <div className="slide" data-num="Discovery of Fire">
         <div className="slideContent">

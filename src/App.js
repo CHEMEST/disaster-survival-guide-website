@@ -21,15 +21,15 @@ function App() {
       
       <div id="navbar">
           <TopNavbar activeId={activeId} setActiveId={setActiveId} switchSlides={switchSlides} />
-        </div>
+      </div>
 
       {/* Main Content */}
-      <div className="flex-grow overflow-hidden">
+      {/* <div className="flex-grow overflow-hidden"> */}
 
         <Skills setActiveId={setActiveId}/>
         {/* <Location />
         <News /> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 }

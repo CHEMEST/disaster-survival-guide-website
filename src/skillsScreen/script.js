@@ -16,7 +16,7 @@ export function isAnimationRunning(){return scrollInfo.isRunning;}
 //selects the scroll location upon loading
 export default function Initialize(){
   console.log("js works");
-  initializeSliding();
+  // initializeSliding();
   // initializeTimeline();
   // initializeNavs();
   initializeScroll();
@@ -37,18 +37,33 @@ function initializeScroll() {
   console.log("initialized");
 
   const parent = window.document.getElementById("historyContent");
+  const children = window.document.querySelectorAll("#historyContent .slide");
   const observer = new IntersectionObserver(function(entries){
+    // console.log(entries);
+    // for(let i = 0; i < entries.length; i++){
+    //   const entry = entries[i];
+    //   console.log(i);
+    //   console.log(entry);
+    //   if(entry.isIntersecting || scrollInfo.isRunning){continue;}
+    //   switchSlides(()=>{return i;})
+    // }
     entries.forEach(function(entry){
-      console.log("ran");
+      // console.log("ran");
       if(!entry.isIntersecting || scrollInfo.isRunning){return;}
-      console.log("scrolling");
+      // console.log("scrolling");
+      for(let i = 0; i < children.length; i++){
+        if(children[i] === entry){
+          scrollInfo.loc = i;
+        }
+      }
+      
       entry.target.scrollIntoView();
     });
   }, {
     root: parent,
     threshold: 0.5,
   });
-  window.document.querySelectorAll("#historyContent .slide").forEach(function(entry){observer.observe(entry);});
+  children.forEach(function(entry){observer.observe(entry);});
 
   // const children = window.document.querySelectorAll("#historyContent .slideContent");
   // children.forEach(function(child){
@@ -188,23 +203,47 @@ function initializeSliding(){
 //Prevents multiple "switchSlide" functions from being called on top of each other in order to prevent animation bugs
 
 export async function switchSlides(newScrollLocationFunction){
+  
   if(scrollInfo.isRunning){return;}
   const newLoc = newScrollLocationFunction(scrollInfo.loc);
   const parent = window.document.getElementById("historyContent");
-  if(newLoc === scrollInfo.loc || newLoc < 0 || newLoc >= scrollInfo.numSlides){return;}
-  scrollInfo.isRunning = true;
+  // parent.style.overflow = "hidden";
   
-    
+  // if(newLoc === scrollInfo.loc || newLoc < 0 || newLoc >= scrollInfo.numSlides){return;}
+  scrollInfo.isRunning = true;
+  const children = window.document.querySelectorAll("#historyContent .slide");  
+// parent.
+  children.item(newLoc).scrollIntoView();
+  console.log("start");
+  await new Promise(function(accept){
+    let resetFunc;
+    const endFunc = function(){
+      accept();
+      console.log("end");
+      parent.removeEventListener("scroll", resetFunc);
+    }
+    let timeout = setTimeout(endFunc, 100);
+    resetFunc = function(){
+      window.clearTimeout(timeout);
+      timeout = setTimeout(endFunc, 100);
+    }
+    parent.addEventListener("scroll", resetFunc);
+  });
 
-  if(true){
-    changeNavigationElementVisibility(true);
-    await Promise.all([runSlideAnimation(newLoc)]);
-  }else{
-    scrollInfo.loc = newLoc;
-    window.document.getElementById("historyContent").style.setProperty("--scrollLocation", `${scrollInfo.loc}`);
-  }
+  // // if(true){
+  // //   changeNavigationElementVisibility(true);
+  // //   await Promise.all([runSlideAnimation(newLoc)]);
+  // // }else{
+  // //   scrollInfo.loc = newLoc;
+  // //   window.document.getElementById("historyContent").style.setProperty("--scrollLocation", `${scrollInfo.loc}`);
+  // // }
+  // parent.scrollTop = children.item(newLoc).getBoundingClientRect().top;
+  // // parent.scrollTop = 0;
+
   scrollInfo.isRunning = false;
-  changeNavigationElementVisibility(false);
+  // parent.overflow = "scroll";
+  scrollInfo.loc = newLoc;
+  // changeNavigationElementVisibility(false);
 }
 
 //changes the nav elements based on the initial parameter

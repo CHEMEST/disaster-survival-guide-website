@@ -31,9 +31,9 @@
   @apply bg-background
 }
 
-/* #historyContent::-webkit-scrollbar {
+#historyContent::-webkit-scrollbar {
   display: none;
-} */
+}
 
 @supports(overflow-y: -moz-scrollbars-none){
   #historyContent{
@@ -44,15 +44,15 @@
 #historyContent .slide{
   --offset: 0;
   margin: 0;
-  position: absolute;
+  position: relative;
 
   width: 100%;
-  height: 100%;
+  height: var(--screenHeight);
   
 
   border: 2px solid white;
 
-  top: calc((var(--offset) - var(--scrollLocation)) * 100%);
+  /* top: calc((var(--offset) - var(--scrollLocation)) * 100%); */
 
   transform: scale(1);
   
